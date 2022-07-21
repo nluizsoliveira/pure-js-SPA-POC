@@ -1,0 +1,93 @@
+:root {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    --black: #393E41;
+    --orange: #FF6F59;
+    --grey: #F6F7EB;
+   
+}
+
+body{
+    background-color: var(--black);
+}
+
+#pageWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#navbar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.navItem{
+    background-color: var(--grey);
+    width: 100px;
+    height: 50px;
+    margin: 20px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+.activeNavItem{
+    background-color: var(--orange);
+}
+
+.navItem:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#content{
+    background-color: var(--grey);
+    width: 350px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px 5px 0px 0px;
+}
+
+#title{
+    color: var(--orange);
+    
+}
+
+#projectImageWrapper{
+    width: 350px;
+    display: flex;
+    justify-content: center;
+}
+
+#projectImage{
+    width: 300px;
+}
+
+#gitImage{
+    width: 30px;
+}
+
+#nextTopicButton{
+    background-color: var(--orange);
+    width: 120px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+#nextTopicButton:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#arrow{
+    transform: rotate(90deg);
+    width: 30px;
+}
