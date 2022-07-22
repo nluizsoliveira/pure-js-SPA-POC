@@ -1,0 +1,138 @@
+:root {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    --black: #393E41;
+    --orange: #FF6F59;
+    --grey: #F6F7EB;
+   
+}
+
+body{
+    background-color: var(--black);
+}
+
+#pageWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#navbar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: var(--black);
+}
+
+.navItem{
+    background-color: var(--grey);
+    width: 100px;
+    height: 50px;
+    margin: 15px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+    font-weight: 700;
+}
+
+.activeNavItem{
+    background-color: var(--orange);
+    color: var(--black);
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.navItem:hover{
+    cursor: pointer;
+    background-color: #393E41;
+    color: var(--grey);
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+#content{
+    margin-top: 80px;
+    background-color: var(--grey);
+    width: 310px;
+    height: 580px;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px 5px 0px 0px;
+}
+
+#title{
+    color: var(--orange);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.paragraph{
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.highlight{
+    color: var(--orange);
+}
+
+#projectImageWrapper{
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+#projectImage{
+    width: 300px;
+    height: 200px;
+    border-radius: 5px;
+}
+
+
+#githubWrapper{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 10px;
+}
+#gitImage{
+    width: 30px;
+    height: 20px;
+}
+
+#nextTopicWrapper{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+#nextTopicButton{
+    background-color: var(--orange);
+    color: var(--grey);
+    width: 110px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    font-weight: bold;
+}
+
+#nextTopicButton:hover{
+    cursor: pointer;
+}
+
+#arrow{
+    transform: rotate(90deg);
+    width: 25px;
+}
