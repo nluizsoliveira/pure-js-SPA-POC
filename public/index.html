@@ -4,7 +4,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css">
+    <link rel="stylesheet" href="largeScreens.css">
 </head>
 
 <body>
@@ -20,14 +21,17 @@
             <span class = "paragraph">&emsp;<span class = "highlight">Node.js</span> batch script that parses a .csv file and generates .pdf certificates for each line/person</span>
             <div id = "projectImageWrapper">
                 <img id = "projectImage" src = "images/certificate.png">
+                <img id = "projectImage" class = "mobileHidden" src = "images/certificate2.png">
             </div>
             <div id = "githubWrapper">
                 <img id = "gitImage" src="images/git_logo.png">
                 <span id = "gitText">Check the <span class = "highlight"><a href = "https://github.com/USPCodeLabSanca/Node-Batch-Certificate-Generator">Source Code</a></span></span>
             </div>
             
-            <span class = "paragraph">&emsp;<span class = "highlight">Mentor</span> of the project, responsible for idealizing, writing requirements, spliting requirements in features divided across team and coding</span>
-            <span class = "paragraph">&emsp;<span class = "highlight">Used</span> in real life recurrently for generating USPCodelab courses, hackathons and other events certificates.</span>
+            <div id = "paragraphWrapper">
+                <span class = "paragraph underImage">&emsp;<span class = "highlight">Mentor</span> of the project, responsible for idealizing, writing requirements, spliting requirements in features divided across team and coding</span>
+                <span class = "paragraph underImage">&emsp;<span class = "highlight">Used</span> in real life recurrently for generating USPCodelab courses, hackathons and other events certificates.</span>
+            </div>
 
             <div id = "nextTopicWrapper">
                 <div id = "nextTopicButton">

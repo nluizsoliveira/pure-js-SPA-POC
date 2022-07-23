@@ -59,11 +59,10 @@ body{
     margin-top: 80px;
     background-color: var(--grey);
     width: 310px;
-    height: 580px;
     padding: 10px 20px;
     display: flex;
     flex-direction: column;
-    border-radius: 5px 5px 0px 0px;
+    border-radius: 5px 5px 5px 5px;
 }
 
 #title{
@@ -97,6 +96,9 @@ body{
     border-radius: 5px;
 }
 
+.mobileHidden{
+    display: none;
+}
 
 #githubWrapper{
     display: flex;
