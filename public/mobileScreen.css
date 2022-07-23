@@ -74,6 +74,7 @@ body{
 .paragraph{
     margin-top: 10px;
     font-size: 14px;
+    margin-left: 10px;
     font-weight: 400;
     text-align: justify;
     text-justify: inter-word;
@@ -96,7 +97,7 @@ body{
     border-radius: 5px;
 }
 
-.mobileHidden{
+.mobileMediumHidden{
     display: none;
 }
 
@@ -111,15 +112,22 @@ body{
     height: 20px;
 }
 
+#paragraphWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
 #nextTopicWrapper{
     display: flex;
     justify-content: flex-end;
-    margin-top: 10px;
+    margin: 10px 0px;
 }
 
 #nextTopicButton{
     background-color: var(--orange);
-    color: var(--grey);
+    color: var(--black);
     width: 110px;
     height: 40px;
     display: flex;
@@ -132,9 +140,16 @@ body{
 
 #nextTopicButton:hover{
     cursor: pointer;
+    color: var(--grey);
+    background-color: var(--black);
 }
 
 #arrow{
     transform: rotate(90deg);
     width: 25px;
+}
+
+a, a:hover, a:focus, a:active {
+    text-decoration: none;
+    color: inherit;
 }

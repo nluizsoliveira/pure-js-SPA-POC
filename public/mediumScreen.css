@@ -1,8 +1,4 @@
-@media only screen and (min-width: 1000px) {
-    .mobileHidden{
-        display: inline;
-    }
-
+@media only screen and (min-width: 800px) {
     #navbar{
         overflow: visible;
         position: static;
@@ -12,6 +8,8 @@
     }
 
     .navItem{
+        width: 150px;
+        height: 75px;
         margin:0px 15px 15px 15px;
     }
 
@@ -25,7 +23,7 @@
 
     #content{
         margin-top: 0px;
-        width: auto;
+        width: 550px;
     }
 
     #title{
@@ -33,29 +31,48 @@
     }
 
     .paragraph{
-        font-size: 22px;
+        font-size: 20px;
+        margin-left: 30px;
     }
 
     #projectImage{
-        width: 300px;
-        height: 215px;
+        width: 500px;
+        height: 350px;
         margin: 0px 30px;
     }
 
     #projectImageWrapper{
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: center;
+        align-items: center;
+        margin-top: 10px;
     }
     
     #paragraphWrapper{
         display: flex;
         flex-direction: row;
         justify-content: center;
+        align-items: flex-start;
     }
 
+    #githubWrapper{
+        margin-right: 30px;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
     .underImage{
-        width: 300px;
-        margin: 0px 30px;
+        width: 230px;
+        margin: 0px 10px;
+    }
+    
+    #nextTopicWrapper{
+        margin-right: 0px;
+        font-size: 20px;
+    }
+
+    #nextTopicButton{
+        width: 150px;
+        height: 75px;
     }
 }
