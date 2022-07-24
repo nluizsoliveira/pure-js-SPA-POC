@@ -1,0 +1,32 @@
+@media only screen and (min-width: 1200px) {
+    .mobileMediumHidden{
+        display: inline;
+    }
+
+    #projectImageWrapper{
+        flex-direction: row;
+    }
+
+    #content{
+        width: auto;
+    }
+
+    .projectImage{
+        width: 350px;
+        height: 250px;
+    }
+
+    .underImage{
+        width: 350px;
+        margin: 0px 30px;
+    }
+    
+    #gitImage{
+        margin-top: 5px;
+        width: 40px;
+        height: 30px;
+    }
+    #githubWrapper{
+        align-items: center;
+    }
+}
