@@ -72,8 +72,14 @@ const renderExperiences = function(content){
 }
 
 const renderResume = function(content){
-    console.log("resume")
-    console.log(content)
+    document.querySelector("#content").innerHTML = "";
+    fetch("/views/resume.html")
+        .then(response => {
+            return response.text()
+        })
+        .then(data => {
+            document.querySelector("#content").innerHTML = data;
+        })
 }
 
 /* WHY EVENT LISTENERS INSTEAD OF <div onclick=function(this)> ?  

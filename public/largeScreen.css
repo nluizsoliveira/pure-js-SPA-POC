@@ -8,7 +8,10 @@
     }
 
     #content{
-        width: auto;
+        width: 820px;
+    }
+    .firstParagraph{
+        width: 760px;
     }
 
     .projectImage{
@@ -28,5 +31,10 @@
     }
     .githubWrapper{
         margin-right: 100px;
+    }
+
+    .resume{
+        width: 800px;
+        height: 1000px;
     }
 }
