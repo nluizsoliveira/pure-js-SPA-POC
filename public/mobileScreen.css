@@ -106,14 +106,14 @@ body{
     color: var(--orange);
 }
 
-.projectImageWrapper{
+.listImageWrapper{
     display: flex;
     justify-content: center;
     padding-top: 10px;
     padding-bottom: 5px;
 }
 
-.projectImage{
+.listImage{
     width: 300px;
     height: 200px;
     border-radius: 5px;

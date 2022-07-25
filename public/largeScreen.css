@@ -3,7 +3,7 @@
         display: inline;
     }
 
-    .projectImageWrapper{
+    .listImageWrapper{
         flex-direction: row;
     }
 
@@ -14,7 +14,7 @@
         width: 760px;
     }
 
-    .projectImage{
+    .listImage{
         width: 350px;
         height: 250px;
     }

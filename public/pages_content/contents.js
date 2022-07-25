@@ -27,6 +27,16 @@ const CONTENTS = {
             "secondParagraph": "Managed the project, breaking syllabus in weekly delivers divided among team in a doing/wrote/reviewed system.",
             "thirdParagraph": "Defined the sylbbus and wrote some of the Javascript chapters"
         }
+    ],
+    'experiences': [
+        {    
+            "title": "Backend Intern - Amdocs (Nov 2021 - Current)",
+            "firstParagraph": "World leading Software provider for Telecoms",
+            "firstImgUrl": "pages_content/images/project_1_1.png",
+            "secondImgUrl": "pages_content/images/project_1_2.png",
+            "secondParagraph": "Implemented Bash, Pro*C and SQL scripts for OI-CLARO clients database migration.",
+            "thirdParagraph": "Manteined and tested Java Web applications (Oracle Weblogic stack: EJBs, JSPs; Junit)"
+        },
     ]
 }
 

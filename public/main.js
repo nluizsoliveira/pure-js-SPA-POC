@@ -3,7 +3,7 @@ import {CONTENTS} from '/pages_content/contents.js'
 const renderContent =  function(clickedNavItem){
     const CONTENTS_HANDLER = {
         'projects': renderAllProjects,
-        'experiences': renderExperiences,
+        'experiences': renderAllExperiences,
         'resume': renderResume
     }
     const contentId = clickedNavItem.id
@@ -48,9 +48,9 @@ const renderAllProjects = function(allProjects){
 const renderProject = function(projectRoot, project){
     projectRoot.querySelector(".title").innerHTML = project.title
     projectRoot.querySelector(".firstParagraph").innerHTML = project.firstParagraph
-    const projectImages = projectRoot.getElementsByClassName("projectImage")
-    projectImages[0].src = project.firstImgUrl
-    projectImages[1].src = project.secondImgUrl
+    const listImages = projectRoot.getElementsByClassName("listImage")
+    listImages[0].src = project.firstImgUrl
+    listImages[1].src = project.secondImgUrl
     projectRoot.querySelector(".sourceCode").href = project.url
     projectRoot.querySelector(".secondParagraph").innerHTML = project.secondParagraph
     projectRoot.querySelector(".thirdParagraph").innerHTML = project.thirdParagraph
@@ -66,9 +66,42 @@ const renderProject = function(projectRoot, project){
     }
 }
 
-const renderExperiences = function(content){
-    console.log("experiences")
-    console.log(content)
+const renderAllExperiences = function(allExperiences){
+    document.querySelector("#content").innerHTML = "";
+    let experienceId = 1; 
+    for(const experience of allExperiences){
+        fetch("/views/experiences.html")
+        .then(response => {
+            return response.text()
+        })
+        .then(data => {
+            document.querySelector("#content").innerHTML += `<div id = "experience${experienceId}"></div>`;
+            const experienceRoot = document.querySelector(`#experience${experienceId}`)
+            experienceRoot.innerHTML = data
+            experienceId++;
+            renderExperience(experienceRoot, experience)
+        })
+    }
+}
+
+const renderExperience = function(experienceRoot, experience){
+    experienceRoot.querySelector(".title").innerHTML = experience.title
+    experienceRoot.querySelector(".firstParagraph").innerHTML = experience.firstParagraph
+    const experienceImages = experienceRoot.getElementsByClassName("listImage")
+    experienceImages[0].src = experience.firstImgUrl
+    experienceImages[1].src = experience.secondImgUrl
+    experienceRoot.querySelector(".secondParagraph").innerHTML = experience.secondParagraph
+    experienceRoot.querySelector(".thirdParagraph").innerHTML = experience.thirdParagraph
+    const paragraphs = experienceRoot.getElementsByClassName("paragraph")
+    for(const paragraph of paragraphs){
+        const text = paragraph.innerHTML
+        const firstSpace = text.indexOf(" ")
+        const firstWord = text.slice(0, firstSpace)
+        const remainingWords = text.slice(firstSpace, text.length)
+        
+        paragraph.innerHTML = `<span class = "highlight">${firstWord}</span>`
+        paragraph.innerHTML += remainingWords
+    }
 }
 
 const renderResume = function(content){
