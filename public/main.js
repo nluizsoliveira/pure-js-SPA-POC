@@ -56,6 +56,13 @@ const renderProject = function(projectRoot, project){
     projectRoot.querySelector(".thirdParagraph").innerHTML = project.thirdParagraph
     const paragraphs = projectRoot.getElementsByClassName("paragraph")
     for(const paragraph of paragraphs){
+        const text = paragraph.innerHTML
+        const firstSpace = text.indexOf(" ")
+        const firstWord = text.slice(0, firstSpace)
+        const remainingWords = text.slice(firstSpace, text.length)
+        
+        paragraph.innerHTML = `<span class = "highlight">${firstWord}</span>`
+        paragraph.innerHTML += remainingWords
     }
 }
 

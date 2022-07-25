@@ -76,6 +76,10 @@ body{
     font-weight: bold;
 }
 
+.forceJustify{
+    display: flex;
+}
+
 .paragraph{
     margin-top: 10px;
     font-size: 14px;
@@ -84,6 +88,7 @@ body{
     text-align: justify;
     text-justify: inter-word;
 }
+
 
 .highlight{
     color: var(--orange);

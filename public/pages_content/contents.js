@@ -11,11 +11,11 @@ const CONTENTS = {
         },
         {    
             "title": "Frontend-API-Mysql POC",
-            "firstParagraph": "A frontend/backend website using API/middleware/dbConnector pattern implementation for a simple library system. ",
+            "firstParagraph": "Frontend/Backend website, implemented through an API/ middleware/ dbConnector pattern for a simple library system. ",
             "firstImgUrl": "pages_content/images/project_2_2.png",
             "secondImgUrl": "pages_content/images/project_2_1.png",
             "url": "https://github.com/nluizsoliveira/API-middleware-dbConnector-POC",
-            "secondParagraph": "Backend API implemented in Python's Flask manipulates a MySQL database.",
+            "secondParagraph": "Backend API implemented in Python's Flask manipulates and retrieve data from a MySQL database.",
             "thirdParagraph": "Frontend implemented in pure HTML, CSS and Javascript allows creating, searching for and deleting books"
         }
     ]
