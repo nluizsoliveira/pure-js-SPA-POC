@@ -10,7 +10,8 @@
     #content{
         width: 820px;
     }
-    .firstParagraph{
+
+    ._firstParagraph{
         width: 760px;
     }
 
@@ -33,7 +34,7 @@
         margin-right: 100px;
     }
 
-    .resume{
+    ._resume{
         width: 800px;
         height: 1000px;
     }

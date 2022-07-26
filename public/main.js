@@ -1,12 +1,11 @@
-import {CONTENTS} from '/pages_content/contents.js'
-import {renderContent, renderAllProjects} from '/renderer.js'
+import {renderAllContents} from '/renderer.js'
+
 const initialRender = function(){
     const navBar = document.querySelector("#navbar")
     for(const navItem of navBar.children){
-        navItem.addEventListener("click", e => {renderContent(e.target)})
+        navItem.addEventListener("click", e => {renderAllContents(e.target)})
     }
-
-    renderAllProjects(CONTENTS.projects)
+    renderAllContents({id: 'projects'})
 }
 
 initialRender()

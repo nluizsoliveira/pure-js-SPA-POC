@@ -79,7 +79,7 @@ body{
 ----------------------------------------- project styling -----------------------------------------
 */
 
-.title{
+._title{
     color: var(--orange);
     font-size: 24px;
     font-weight: bold;
@@ -99,7 +99,7 @@ body{
     text-justify: inter-word;
 }
 
-.firstParagraph{
+._firstParagraph{
     width: 290px;
 }
 .highlight{
@@ -182,7 +182,7 @@ a, a:hover, a:focus, a:active {
 ----------------------------------------- resume styling -----------------------------------------
 */
 
-.resume{
+._resume{
     width: 300px;
     height: 500px;
 }
