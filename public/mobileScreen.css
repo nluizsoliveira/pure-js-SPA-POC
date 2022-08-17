@@ -1,3 +1,7 @@
+
+/*
+----------------------------------------- global styling -----------------------------------------
+*/
 :root {
     font-family: 'Barlow Semi Condensed', sans-serif;
     --black: #393E41;
@@ -55,21 +59,43 @@ body{
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.5);
 }
 
+.activeNavItem:hover{
+    background-color: var(--orange);
+    color: var(--black);
+}
+
 #content{
     margin-top: 80px;
     background-color: var(--grey);
     width: 310px;
+    min-height: 400px;
     padding: 10px 20px;
     display: flex;
     flex-direction: column;
     border-radius: 5px 5px 5px 5px;
 }
 
-#title{
+/*
+----------------------------------------- project styling -----------------------------------------
+*/
+
+._title{
     color: var(--orange);
     font-size: 24px;
     font-weight: bold;
 }
+
+._companyInfo{
+    display: flex;
+    margin-left: 5px;
+    font-size: 12px;
+    margin-top: 5px
+}
+
+.forceJustify{
+    display: flex;
+}
+
 
 .paragraph{
     margin-top: 10px;
@@ -80,18 +106,21 @@ body{
     text-justify: inter-word;
 }
 
+._firstParagraph{
+    width: 290px;
+}
 .highlight{
     color: var(--orange);
 }
 
-#projectImageWrapper{
+.listImageWrapper{
     display: flex;
     justify-content: center;
     padding-top: 10px;
     padding-bottom: 5px;
 }
 
-.projectImage{
+.listImage{
     width: 300px;
     height: 200px;
     border-radius: 5px;
@@ -101,31 +130,32 @@ body{
     display: none;
 }
 
-#githubWrapper{
+.githubWrapper{
     display: flex;
     justify-content: flex-end;
     align-items: center;
     font-size: 10px;
 }
-#gitImage{
+
+.gitImage{
     width: 30px;
     height: 20px;
 }
 
-#paragraphWrapper{
+.paragraphWrapper{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
 }
 
-#nextTopicWrapper{
+.nextTopicWrapper{
     display: flex;
     justify-content: flex-end;
     margin: 10px 0px;
 }
 
-#nextTopicButton{
+.nextTopicButton{
     background-color: var(--orange);
     color: var(--black);
     width: 110px;
@@ -139,13 +169,13 @@ body{
     font-size: 13px;
 }
 
-#nextTopicButton:hover{
+.nextTopicButton:hover{
     cursor: pointer;
     color: var(--grey);
     background-color: var(--black);
 }
 
-#arrow{
+.arrow{
     transform: rotate(90deg);
     width: 25px;
 }
@@ -153,4 +183,13 @@ body{
 a, a:hover, a:focus, a:active {
     text-decoration: none;
     color: inherit;
+}
+
+/*
+----------------------------------------- resume styling -----------------------------------------
+*/
+
+._resume{
+    width: 300px;
+    height: 500px;
 }

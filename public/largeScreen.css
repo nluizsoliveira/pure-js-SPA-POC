@@ -3,15 +3,19 @@
         display: inline;
     }
 
-    #projectImageWrapper{
+    .listImageWrapper{
         flex-direction: row;
     }
 
     #content{
-        width: auto;
+        width: 820px;
     }
 
-    .projectImage{
+    ._firstParagraph{
+        width: 760px;
+    }
+
+    .listImage{
         width: 350px;
         height: 250px;
     }
@@ -21,12 +25,17 @@
         margin: 0px 30px;
     }
     
-    #gitImage{
+    .gitImage{
         margin-top: 5px;
         width: 40px;
         height: 30px;
     }
-    #githubWrapper{
-        align-items: center;
+    .githubWrapper{
+        margin-right: 100px;
+    }
+
+    ._resume{
+        width: 800px;
+        height: 1000px;
     }
 }
