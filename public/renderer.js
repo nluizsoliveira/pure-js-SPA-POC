@@ -18,7 +18,6 @@ export const renderAllContents =  function(clickedNavItem){
             return response.text()
         })
         .then(view => {
-            console.log(allContents)
             const allContentsRoot = document.querySelector("#content")
             for(const content of allContents){
                 const contentRoot = document.createElement('div')
@@ -26,8 +25,6 @@ export const renderAllContents =  function(clickedNavItem){
                 allContentsRoot.appendChild(contentRoot)
                 renderContent(content, contentRoot)
             }
-        }).catch((err)=>{
-            console.log(err)
         })
 }
 

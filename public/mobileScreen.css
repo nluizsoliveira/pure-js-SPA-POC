@@ -85,6 +85,13 @@ body{
     font-weight: bold;
 }
 
+._companyInfo{
+    display: flex;
+    margin-left: 5px;
+    font-size: 12px;
+    margin-top: 5px
+}
+
 .forceJustify{
     display: flex;
 }
