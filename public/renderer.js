@@ -28,20 +28,35 @@ export const renderAllContents =  function(clickedNavItem){
         })
 }
 
-const renderContent = function(content, contentRoot){
-    const SPECIAL_TAGS_HANDLER = {
+const renderContent = async function(content, contentRoot){
+    const PATH_TAGS = {
         'IMG': 'src',
         'A': 'href',
         'EMBED': 'src'
     }
     for (const [className, value] of Object.entries(content)){
         const elementRoot = contentRoot.querySelector(`.${className}`)
-        const specialContent = SPECIAL_TAGS_HANDLER[elementRoot.tagName]
-        console.log(specialContent)
-        if(specialContent){
-            elementRoot[specialContent] = value
-        } else{
-            elementRoot.innerHTML = value
+        const rootTag = elementRoot.tagName
+        const isPathElement = (rootTag in PATH_TAGS)
+        if(isPathElement){
+            const pathKind = PATH_TAGS[rootTag]
+            elementRoot[pathKind] = value
+        } 
+        else {
+            if(elementRoot.classList.contains("processedHTML")){
+                elementRoot.innerHTML = await readHTML(value)
+            }
+            else{
+                elementRoot.innerHTML = value
+            }
         }
     }
+}
+
+const readHTML = async function(path) {
+    const HTML = await fetch(path)
+        .then(res => {return res.text()})
+        .then(html=>{return html})
+
+    return HTML
 }
