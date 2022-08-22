@@ -16,9 +16,12 @@ for(const file of markdownFiles){
 
 const public = path.join(__dirname, 'public');
 app.get('/', function(req, res) {
-    res.sendFile(path.join(public, 'components/resume/test/test.html'));
+    res.sendFile(path.join(public, 'index.html'));
 });
 
+app.get('/test', function(req, res) {
+    res.sendFile(path.join(public, 'components/project/test/test.html'));
+});
 app.use('/', express.static(public));
 
 app.listen(8080);
