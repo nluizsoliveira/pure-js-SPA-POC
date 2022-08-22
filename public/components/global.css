@@ -4,3 +4,9 @@
     --orange: #FF6F59;
     --grey: #F6F7EB;  
 }
+
+a, a:hover, a:focus, a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
