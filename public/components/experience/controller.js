@@ -18,12 +18,7 @@ const setViewState = function(experience, viewRoot){
         const elementRoot = viewRoot.querySelector(`.${className}`)
         const elementRootTag = elementRoot.tagName
         if(elementRootTag === 'IMG'){
-            console.log(className, value)
-            console.log(elementRootTag)
             elementRoot['src'] = value
-        }
-        else if(elementRootTag === 'A'){
-            elementRoot['href'] =  value
         }
         else {
             elementRoot.innerHTML = value
