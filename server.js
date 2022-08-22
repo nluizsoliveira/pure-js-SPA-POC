@@ -16,7 +16,7 @@ for(const file of markdownFiles){
 
 const public = path.join(__dirname, 'public');
 app.get('/', function(req, res) {
-    res.sendFile(path.join(public, 'components/experience/test/test.html'));
+    res.sendFile(path.join(public, 'components/experienceList/test/test.html'));
 });
 
 app.use('/', express.static(public));
