@@ -28,7 +28,7 @@ app.get('/test/:component', function(req, res) {
     const component = req.params.component
 
     if (allComponents.includes(component)){
-        res.sendFile(path.join(public, `components/navbar/test/test.html`));
+        res.sendFile(path.join(public, `components/${component}/test/test.html`));
     }
     
     else{
