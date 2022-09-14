@@ -15,13 +15,26 @@ for(const file of markdownFiles){
 }
 
 const public = path.join(__dirname, 'public');
+
+app.use('/', express.static(public));
 app.get('/', function(req, res) {
     res.sendFile(path.join(public, 'index.html'));
 });
 
-app.get('/test', function(req, res) {
-    res.sendFile(path.join(public, 'components/project/test/test.html'));
+app.use('/test', express.static(public));
+app.get('/test/:component', function(req, res) {
+    const componentsFolder = path.join(__dirname, 'public/components/')
+    const allComponents = fs.readdirSync(componentsFolder)
+    const component = req.params.component
+
+    if (allComponents.includes(component)){
+        res.sendFile(path.join(public, `components/navbar/test/test.html`));
+    }
+    
+    else{
+        res.sendStatus(404);
+    }
 });
-app.use('/', express.static(public));
+
 
 app.listen(8080);
