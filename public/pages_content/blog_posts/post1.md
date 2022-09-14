@@ -1,18 +1,8 @@
-# Web Scraping Introduction
+# Web Scraping - Post 1 
 
 ## What is web scraping?
-## is webscraping worth learning?
-lorem lorem lorem
+Web scraping is programatically extracting data from websites into structured data formats, such as JSON, CSV and others. 
 
-```python
-list = []
-for element in list:
-    print(element)
-```
+Extracting raw data may not be trivial. Apart from the inherent complexity of how the website displays data (some more or less simple), sometimes it is provided in complex formats to process such as images or PDFs. Furthermore, just extracting data once does not attend most projects requirements. Further steps such as transforming the data in a convenient way and loading it into a database (Also kown as ETL: Extract, Transform, Load) is recurrently done when Web Scraping. Schedueling the scraping script so it runs periodically and deploying it so it can run on the cloud are also common tasks. 
 
-wfoijefiojwefi
-
-oiwfjwiofjfewjio
-
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+Therefore, web scraping is an intersectional field that often involves data mining, data engineering and devops tasks.

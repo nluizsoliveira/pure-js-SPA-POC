@@ -4,9 +4,7 @@ const CONTENTS = {
     ],
 
     'resume':[
-        {
-            '_resume': '/pages_content/pdfs/resume.pdf'
-        },
+        
     ],
     'blog':[
         {
