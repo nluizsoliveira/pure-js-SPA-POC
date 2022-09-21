@@ -1,14 +1,10 @@
 import {NAV_STATES, navState, setNavState} from '/components/navbar/model.js'
 
-export const initialRenderNav = function(root){
-    renderNav(root, NAV_STATES.blog)
-}
-
-const renderNav = async function(root, state){
+export const renderNav = async function(root, state, stateLifter, parent){
     setNavState(state)
     await renderView(root)
     setViewState()
-    bindControllerToView(root)
+    bindControllerToView(root, stateLifter, parent)
 }
 
 const renderView = async function(root){
@@ -25,12 +21,13 @@ const setViewState = function(){
             : navItem.classList.remove("activeNavItem")
     }
 }
-const bindControllerToView = function(root){
+const bindControllerToView = function(root, stateLifter, parent){
     const navbar = document.querySelector("#navbar")
     for(const navItem of navbar.children){
         navItem.addEventListener("click", e => {
-            setNavState(NAV_STATES[e.target.id])
-            renderNav(root, navState)
+            const state = NAV_STATES[e.target.id]
+            renderNav(root, state, stateLifter, parent)
+            stateLifter(parent, state)
         })
     }
 }

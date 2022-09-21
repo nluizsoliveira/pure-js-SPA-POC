@@ -13,7 +13,7 @@ const setNavState = function(newState){
         navState = newState
     }
     else{
-        console.log(newState, 'Is not a valid State.')
+        console.log(newState, 'Is not a valid Nav State.')
     }
 }
 
