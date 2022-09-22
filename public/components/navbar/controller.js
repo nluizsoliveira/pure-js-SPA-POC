@@ -26,8 +26,13 @@ const bindControllerToView = function(root, stateLifter, parent){
     for(const navItem of navbar.children){
         navItem.addEventListener("click", e => {
             const state = NAV_STATES[e.target.id]
-            renderNav(root, state, stateLifter, parent)
-            stateLifter(parent, state)
+            updateNav(state, stateLifter, parent)
         })
     }
+}
+
+const updateNav = function(state, stateLifter, parent){
+    setNavState(state)
+    setViewState()
+    stateLifter(parent, state)
 }
