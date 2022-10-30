@@ -3,4 +3,4 @@ import {renderIndex} from '/components/index/controller.js'
 
 const root = document.getElementById("indexRoot");
 
-renderIndex(root, INDEX_STATES.blog)
+renderIndex(root, INDEX_STATES.projectList)

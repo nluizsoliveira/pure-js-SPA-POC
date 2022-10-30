@@ -9,7 +9,7 @@ body{
     align-items: center;
 }
 
-#content{
+#indexContentRoot{
     margin-top: 80px;
     background-color: var(--grey);
     width: 310px;
@@ -29,7 +29,7 @@ body{
         margin-top: 30px;
     }
 
-    #content{
+    #indexContentRoot{
         margin-top: 0px;
         width: 550px;
         height: 100%;
@@ -38,7 +38,7 @@ body{
 }
 
 @media only screen and (min-width: 1200px) {
-    #content{
+    #indexContentRoot{
         width: 820px;
         height: 100%;
     }

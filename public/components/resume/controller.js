@@ -13,7 +13,6 @@ const renderView = async function(viewRoot){
 }
 
 const setViewState = function(resume){
-    const elementRoot = document.getElementById('resume')
-    console.log(elementRoot)
+    const elementRoot = document.getElementById('resumeRoot')
     elementRoot['src'] = resume
 }

@@ -1,12 +1,26 @@
-import {indexState, setIndexState} from '/components/index/model.js'
+import {indexState, CONTENT_RENDERERS, setIndexState} from '/components/index/model.js'
 import {renderNav} from '/components/navbar/controller.js'
+
 
 export const renderIndex = async function(root, newIndexState){
     setIndexState(newIndexState)
     await renderView(root)
-    const navRoot = document.getElementById("navRoot");
-    await renderNav(navRoot, newIndexState, navStateLifter, root);
 
+    const navRoot = document.getElementById("navRoot");
+    await renderNav(navRoot, newIndexState, stateLifter);
+
+    await renderContent()
+}
+
+export const renderContent = async function(){
+    const contentRoot = document.getElementById("indexContentRoot")
+    const contentRenderer = getContentRender()
+    contentRoot.innerHTML = ""
+    contentRenderer(contentRoot, indexState)
+}
+
+const getContentRender = function(){
+    return CONTENT_RENDERERS[indexState]
 }
 
 const renderView = async function(root){
@@ -15,7 +29,7 @@ const renderView = async function(root){
     root.innerHTML = view
 }
 
-export const navStateLifter = async function(root, newNavState){
-    setIndexState(newNavState)
-    // renderIndex(root, newNavState)
+export const stateLifter = function(newState){
+    setIndexState(newState)
+    renderContent()
 }

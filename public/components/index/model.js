@@ -1,3 +1,7 @@
+import {renderProjectList} from '/components/projectList/controller.js'
+import {renderResume} from '/components/resume/controller.js'
+import {renderExperienceList} from '/components/experienceList/controller.js'
+
 const INDEX_STATES = {
     blog: 'blog', 
     about: 'about',
@@ -5,6 +9,15 @@ const INDEX_STATES = {
     projectList: 'projectList',
     resume: 'resume'
 }
+
+const CONTENT_RENDERERS = {
+    blog: '',
+    about: '',
+    experienceList: renderExperienceList,
+    projectList: renderProjectList,
+    resume: renderResume
+}
+
 
 let indexState = null
 
@@ -17,4 +30,4 @@ const setIndexState = function(newState){
     }
 }
 
-export {INDEX_STATES, indexState, setIndexState}
+export {INDEX_STATES, CONTENT_RENDERERS, indexState, setIndexState}
