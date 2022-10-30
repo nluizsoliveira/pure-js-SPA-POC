@@ -26,7 +26,7 @@ app.get('/test/:component', function(req, res) {
     const componentsFolder = path.join(__dirname, 'public/components/')
     const allComponents = fs.readdirSync(componentsFolder)
     const component = req.params.component
-
+    
     if (allComponents.includes(component)){
         res.sendFile(path.join(public, `components/${component}/test/test.html`));
     }

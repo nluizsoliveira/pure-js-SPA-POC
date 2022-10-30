@@ -1,8 +1,8 @@
 const INDEX_STATES = {
     blog: 'blog', 
     about: 'about',
-    experiences: 'experiences',
-    projects: 'projects',
+    experienceList: 'experienceList',
+    projectList: 'projectList',
     resume: 'resume'
 }
 

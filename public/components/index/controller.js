@@ -6,7 +6,7 @@ export const renderIndex = async function(root, newIndexState){
     await renderView(root)
     const navRoot = document.getElementById("navRoot");
     await renderNav(navRoot, newIndexState, navStateLifter, root);
-    console.log("index state", indexState)
+
 }
 
 const renderView = async function(root){
@@ -16,5 +16,6 @@ const renderView = async function(root){
 }
 
 export const navStateLifter = async function(root, newNavState){
-    renderIndex(root, newNavState)
+    setIndexState(newNavState)
+    // renderIndex(root, newNavState)
 }
