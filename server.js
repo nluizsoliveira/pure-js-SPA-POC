@@ -18,7 +18,7 @@ const public = path.join(__dirname, 'public');
 
 app.use('/', express.static(public));
 app.get('/', function(req, res) {
-    res.sendFile(path.join(public, 'index.html'));
+    res.sendFile(path.join(public, 'public/index.html'));
 });
 
 app.use('/test', express.static(public));

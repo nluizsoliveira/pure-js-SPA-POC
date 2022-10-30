@@ -1,18 +1,6 @@
-import {renderAllContents} from '/renderer.js'
+import {INDEX_STATES} from '/components/index/model.js'
+import {renderIndex} from '/components/index/controller.js'
 
-const initialRender = function(){
-    const navBar = document.querySelector("#navbar")
-    for(const navItem of navBar.children){
-        navItem.addEventListener("click", e => {renderAllContents(e.target)})
-    }
-    renderAllContents({id: 'projects'})
-}
+const root = document.getElementById("indexRoot");
 
-initialRender()
-
-/* WHY EVENT LISTENERS INSTEAD OF <div onclick=function(this)> ?  
-*   main.js must be a module to import content.js and renderer.js modules
-*   exported variables. HTML cannot access module functions. Solutions are: 
-*       1) binding every function to window object OR
-*       2) manually adding event listeners (chosen) 
-*/
+renderIndex(root, INDEX_STATES.projectList)
