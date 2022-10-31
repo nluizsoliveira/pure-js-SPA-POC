@@ -3,9 +3,6 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-    position: fixed;
-    top: 0;
     width: 100%;
     background-color: var(--black);
     font-weight: 700;
@@ -33,8 +30,6 @@
 
 @media only screen and (min-width: 800px) {
     #navbar{
-        overflow: visible;
-        position: static;
         display: flex;
         flex-direction: column;
         width: auto;

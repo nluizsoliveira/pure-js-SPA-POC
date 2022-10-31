@@ -20,7 +20,22 @@ body{
     border-radius: 5px 5px 5px 5px;
 }
 
+#navRoot{
+    display: flex;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    background-color: red;
+    width: 100%;
+}
+
 @media only screen and (min-width: 800px) {
+    #navRoot {
+        overflow: visible;
+        position: static;
+        width: auto;
+    }
+
     #pageWrapper{
         display: flex;
         flex-direction: row;
