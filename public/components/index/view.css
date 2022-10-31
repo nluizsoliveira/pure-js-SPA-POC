@@ -24,8 +24,7 @@ body{
     display: flex;
     overflow: hidden;
     position: fixed;
-    top: 0;
-    background-color: red;
+    top: 0;    
     width: 100%;
 }
 

@@ -4,7 +4,7 @@ var path = require('path');
 var fs = require('fs');
 const marked = require('marked')
 
-const markdownFolder = path.join(__dirname, 'public/pages_content/blog_posts/')
+const markdownFolder = path.join(__dirname, 'public/blog_posts/')
 
 const markdownFiles = fs.readdirSync(markdownFolder)
 for(const file of markdownFiles){
