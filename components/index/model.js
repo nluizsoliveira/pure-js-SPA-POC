@@ -1,4 +1,5 @@
 import {renderAbout} from '/components/about/controller.js'
+import {renderBlog} from '/components/blog/controller.js'
 import {renderExperienceList} from '/components/experienceList/controller.js'
 import {renderProjectList} from '/components/projectList/controller.js'
 import {renderResume} from '/components/resume/controller.js'
@@ -14,7 +15,7 @@ const INDEX_STATES = {
 }
 
 const CONTENT_RENDERERS = {
-    blog: '',
+    blog: renderBlog,
     about: renderAbout,
     experienceList: renderExperienceList,
     projectList: renderProjectList,
