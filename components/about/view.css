@@ -24,7 +24,7 @@ h2{
     display: flex;
     align-items: center;
     justify-content:flex-start;
-    font-size: 15px 
+    font-size: 15px;
 }
 
 #avatar{
@@ -82,10 +82,25 @@ bold{
 }
 
 @media only screen and (min-width: 800px) {
+    #aboutRoot{
+        font-size: 14px;
+    }
+    h1{
+        font-size: 40px;
+    }
+    h2{
+        font-size: 24px;
+    }
+
+    #avatarTitlesWrapper{
+        font-size: 26px;    
+    }
+
     #avatar{
         width: 200px;
         height: 200px;
     }
+
     #findmeWrapper{
         flex-wrap:nowrap
     }
@@ -93,14 +108,20 @@ bold{
     .findmeItem{
         width: auto;
     }
+}
 
+@media only screen and (min-width: 1200px) {
     #aboutRoot{
-        font-size: 14px;
+        font-size: 16px;
     }
     h1{
-        font-size: 50px;
+        font-size: 44px;
     }
     h2{
-        font-size: 24px;
+        font-size: 30px;
+    }
+
+    #avatarTitlesWrapper{
+        font-size: 26px;    
     }
 }
