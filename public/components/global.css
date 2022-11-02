@@ -1,0 +1,12 @@
+:root {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    --black: #393E41;
+    --orange: #FF6F59;
+    --grey: #F6F7EB;  
+}
+
+a, a:hover, a:focus, a:active {
+    text-decoration: none;
+    color: inherit;
+}
+

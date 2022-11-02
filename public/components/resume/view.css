@@ -1,0 +1,19 @@
+#resumeRoot{
+    width: 300px;
+    height: 500px;
+}
+
+@media only screen and (min-width: 800px) {
+    #resumeRoot{
+        width: 500px;
+        height: 700px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    #resumeRoot{
+        width: 800px;
+        height: 1000px;
+    }
+}
+
