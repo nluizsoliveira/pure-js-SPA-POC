@@ -24,7 +24,7 @@ h2{
     display: flex;
     align-items: center;
     justify-content:flex-start;
-    font-size: 15px !important;
+    font-size: 15px 
 }
 
 #avatar{
@@ -81,3 +81,26 @@ bold{
     justify-content: flex-end;
 }
 
+@media only screen and (min-width: 800px) {
+    #avatar{
+        width: 200px;
+        height: 200px;
+    }
+    #findmeWrapper{
+        flex-wrap:nowrap
+    }
+
+    .findmeItem{
+        width: auto;
+    }
+
+    #aboutRoot{
+        font-size: 14px;
+    }
+    h1{
+        font-size: 50px;
+    }
+    h2{
+        font-size: 24px;
+    }
+}
