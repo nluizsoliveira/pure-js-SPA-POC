@@ -4,7 +4,7 @@ var path = require('path');
 var fs = require('fs');
 const marked = require('marked')
 
-const markdownFolder = path.join(__dirname, 'public/blog_posts/')
+const markdownFolder = path.join(__dirname, 'blog_posts/')
 
 const markdownFiles = fs.readdirSync(markdownFolder)
 for(const file of markdownFiles){
@@ -14,16 +14,16 @@ for(const file of markdownFiles){
     fs.writeFileSync(markdownFolder + file.replace('.md', '.html'), html);
 }
 
-const public = path.join(__dirname, 'public');
+const public = path.join(__dirname, '');
 
 app.use('/', express.static(public));
 app.get('/', function(req, res) {
-    res.sendFile(path.join(public, 'public/index.html'));
+    res.sendFile(path.join(public, 'index.html'));
 });
 
 app.use('/test', express.static(public));
 app.get('/test/:component', function(req, res) {
-    const componentsFolder = path.join(__dirname, 'public/components/')
+    const componentsFolder = path.join(__dirname, 'components/')
     const allComponents = fs.readdirSync(componentsFolder)
     const component = req.params.component
     
