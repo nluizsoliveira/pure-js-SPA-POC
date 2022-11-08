@@ -1,38 +1,36 @@
 <h1 id="steps-to-configure-a-vps-for-hosting-node-applications">Steps to configure a VPS for hosting Node applications</h1>
-<p>This is a summary of (many) tutorials on deploying a <strong>Node-served webpage</strong> 
-on your <strong>own domain</strong>. Each step contains a reference to the source material
+<p>This is a summary of (many) tutorials on deploying a Node-served webpage
+on your own domain. Each step contains a reference to the source material
 (hostinger, digitalocean, nginx and certbot tutorials) </p>
-<p>STEPS COVERED: </p>
+<h3 id="steps-covered">STEPS COVERED:</h3>
 <ol start="0">
-<li>Overview on domains, hosting and VPS</li>
-<li>Point domain to VPS IPV4 and IPV6 (DNS Record)</li>
-<li>First VPS login and packages updating</li>
-<li>Create user in sudo group</li>
-<li>Create a public key, enable SSH-KEY login and disable user/password login</li>
-<li>Configure Firewall (UFW)</li>
-<li>Install Node</li>
-<li>Install and configure Nginx</li>
-<li>Enable HTTPS on NGINX: Install TLS/SSL Certificates (Certbot)</li>
-<li>Setup SSH for github and clone your Node.js repository</li>
-<li>Run your node process as a deamon (PM2)</li>
-<li>Setup Nginx as a Reverse Proxy Server</li>
+<li><strong>Overview on domains, hosting and VPS</strong> </li>
+<li><strong>Point domain to VPS IPV4 and IPV6 (DNS Record)</strong> </li>
+<li><strong>First VPS login and packages updating</strong> </li>
+<li><strong>Create user in sudo group</strong> </li>
+<li><strong>Create a public key, enable SSH-KEY login and disable user/password login</strong> </li>
+<li><strong>Configure Firewall (UFW)</strong> </li>
+<li><strong>Install Node</strong> </li>
+<li><strong>Install and configure Nginx</strong> </li>
+<li><strong>Enable HTTPS on NGINX: Install TLS/SSL Certificates (Certbot)</strong> </li>
+<li><strong>Setup SSH for github and clone your Node.js repository</strong> </li>
+<li><strong>Run your node process as a deamon (PM2)</strong> </li>
+<li><strong>Setup Nginx as a Reverse Proxy Server</strong></li>
 </ol>
-<p>PREMISES: </p>
+<h3 id="premises">PREMISES:</h3>
 <ol>
-<li>My VPS is at hostinger. <strong>Most steps remain the same regardless of your vps provider</strong>.The exception is <strong>changing DNS record</strong>, which is done through 
+<li>My VPS is at hostinger. Most steps remain the same regardless of your vps provider.The exception is changing DNS record, which is done through 
 hostingers online GUI. </li>
-<li>Steps assume <strong>ubuntu</strong> as client&#39;s distro and <strong>ubuntu 18.04</strong> 
+<li>Steps assume ubuntu as client&#39;s distro and ubuntu 18.04.
 as the VPS distro. </li>
 <li>If you&#39;re using Windows as a client, SSH steps can be done through 
 <a href="https://www.hostinger.com/tutorials/how-to-use-putty-ssh">putty</a></li>
 </ol>
-<p>! WARNING !</p>
-<ol>
-<li>Although every article summarized was written by specialized professionals, 
-<strong>I am not a senior specialized professional</strong>. Do not take this summary steps as enough to fully secure your application. </li>
-<li>Web security, Sysadmin, Infra and Devops are careers theirselves.<strong>I do not recommend configuring a server from scratch without support from senior specialized professionals</strong>.</li>
-</ol>
-<p>I only did it for the sake of <strong>learning and ecouraging others to learn more about deploy.</strong></p>
+<h3 id="-warning-">! WARNING !</h3>
+<p>Although every article summarized was written by specialized professionals, 
+I am not a senior specialized professional. Do not take this summary steps as enough to fully secure your application. </p>
+<p>Web security, Sysadmin, Infra and Devops are careers theirselves.I do not recommend configuring a server from scratch without support from senior specialized professionals. </p>
+<p>I only did it for the sake of learning and ecouraging others to learn more about deploy.</p>
 <h2 id="0---overview-on-vpss-domains-and-hosting">0 - Overview on VPSs, domains and Hosting</h2>
 <p>To deploy a page on your own website, you&#39;ll need: </p>
 <ol>
@@ -40,12 +38,12 @@ as the VPS distro. </li>
 <li>A Host - An actual machine, with IPV4/IPV6 ips, in which a 
 webserver will listen and respond to HTTP/S requests</li>
 </ol>
-<p>I used <strong>hostinger</strong> for both <a href="https://www.hostinger.com.br/registro-de-dominio">buying a domain</a> and renting a hosting service (in my case, a VPS). </p>
+<p>I used hostinger for both <a href="https://www.hostinger.com.br/registro-de-dominio">buying a domain</a> and renting a hosting service (in my case, a VPS). </p>
 <p>If your website is static (Pure HTML/CSS/Javascript) you can use a 
 <a href="https://www.hostinger.com.br/hospedagem-de-sites">simpler hosting solution</a> 
 that allows uploading assets and setting a <code>index.html</code>. 
 All server configuration is automated through an online GUI.  </p>
-<p>That&#39;s not the case for you <strong>Node app</strong>, that exposes a port and defines routes.
+<p>That&#39;s not the case for you Node app, that exposes a port and defines routes.
 Some hosting platforms provide automatized solutions for that. For sake of learning
 more about deploying, I&#39;ve chosen <a href="https://www.hostinger.com.br/servidor-vps">VPS</a>, - Virtual Private Server, whichs requires further configuration. </p>
 <h2 id="1---point-domain-to-vps-ipv4-dns-record">1 - Point domain to VPS IPV4 (DNS Record)</h2>
@@ -54,7 +52,7 @@ more about deploying, I&#39;ve chosen <a href="https://www.hostinger.com.br/serv
 <h3 id="10-discover-your-vps-ipv4-and-ipv6">1.0 Discover your VPS IPV4 and IPV6</h3>
 <p>If you&#39;re using hostinger it&#39;s <a href="https://hpanel.hostinger.com/servers/">here</a></p>
 <h3 id="11-delete-older-dns-records">1.1 Delete older DNS Records</h3>
-<p>At <code>hpanel.hostinger.com/domain/&lt;your_domain.com&gt;/dns</code>, delete: </p>
+<p>At <strong>hpanel.hostinger.com/domain/your_domain.com/dns</strong>, delete: </p>
 <ol>
 <li>All records type <code>A</code> with names exactly <code>@</code> or <code>www</code>.  </li>
 <li>All records type <code>AAAA</code> with names exactly <code>@</code> or <code>www</code>.</li>
@@ -70,7 +68,7 @@ more about deploying, I&#39;ve chosen <a href="https://www.hostinger.com.br/serv
 </ol>
 <h3 id="13-verify-dns-propagation">1.3 Verify DNS propagation</h3>
 <p>Check it at <a href="https://www.whatsmydns.net/">https://www.whatsmydns.net/</a></p>
-<h2 id="2-first-vps-login-and-packages-updating">2 First VPS login and packages updating</h2>
+<h2 id="2---first-vps-login-and-packages-updating">2 - First VPS login and packages updating</h2>
 <p><a href="https://www.hostinger.com/tutorials/getting-started-with-vps-hosting">Full Reference - DigitalOcean</a></p>
 <p>We&#39;ll setup SSH keys as soon as possible. But before that we&#39;ll update 
 packages and create an user. </p>
@@ -85,7 +83,7 @@ packages and create an user. </p>
 <pre><code class="language-bash">apt update
 apt upgrade
 </code></pre>
-<h2 id="3-create-user-in-sudo-group">3 Create user in sudo group</h2>
+<h2 id="3---create-user-in-sudo-group">3 - Create user in sudo group</h2>
 <p>It&#39;s a good practice to avoid operating as root when not necessary. </p>
 <h3 id="31-create-username">3.1 Create Username</h3>
 <pre><code class="language-bash">adduser username
@@ -97,7 +95,7 @@ apt upgrade
 <h3 id="33-swap-contet-to-new-user">3.3 Swap contet to new user</h3>
 <pre><code class="language-bash">su - username
 </code></pre>
-<h2 id="4-create-a-public-key-enable-ssh-key-login-and-disable-userpassword-login">4 Create a public key, enable SSH-KEY login and disable user/password login</h2>
+<h2 id="4---create-a-public-key-enable-ssh-key-login-and-disable-userpassword-login">4 - Create a public key, enable SSH-KEY login and disable user/password login</h2>
 <ol>
 <li><a href="https://www.hostinger.com/tutorials/ssh/how-to-set-up-ssh-keys">Full Reference 1 - Hostinger</a></li>
 <li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-to-connect-to-a-remote-server">Full Reference 2 - DigitalOcean</a></li>
@@ -167,7 +165,7 @@ SSH key was set only for your new <code>user</code>. Therefore you&#39;ll not be
 into <code>root</code> any longer. </p>
 <p>If for some reason will need to access <code>root</code> user, do <code>sudo su</code>. If for some 
 reason you need to enable ssh login to root, follow <a href="https://serverfault.com/questions/140421/how-to-set-public-ssh-key-for-root-user-on-server">this tutorial</a></p>
-<h2 id="5-configure-firewall-ufw">5 Configure Firewall (UFW)</h2>
+<h2 id="5---configure-firewall-ufw">5 - Configure Firewall (UFW)</h2>
 <p><a href="https://www.digitalocean.com/community/tutorials/how-to-setup-a-firewall-with-ufw-on-an-ubuntu-and-debian-cloud-server">Full reference - DigitalOcean</a></p>
 <p>Iptables is the native program for configuring ipv4 packages filtering. 
 UFW (Uncomplicated Firewall) is an interface for setting up iptables 
@@ -232,7 +230,7 @@ sudo ufw reset
 <pre><code class="language-bash"># Not a step 
 sudo ufw disable
 </code></pre>
-<h2 id="6-install-node">6 Install Node</h2>
+<h2 id="6---install-node">6 - Install Node</h2>
 <p><a href="https://lowendbox.com/blog/how-to-set-up-a-node-js-application-on-ubuntu-16-04-vps/">Full Reference - LowEndBox</a></p>
 <h3 id="61-install-latest-node-version-that-supports-you-vps-os">6.1 Install latest Node version that supports you VPS OS</h3>
 <p>I&#39;ll use Node 16</p>
@@ -244,7 +242,7 @@ sudo apt install -y nodejs gcc g++ make
 node -v #Check if installation was sucessful
 npm -v #Check if NPM was installed
 </code></pre>
-<h2 id="7-install-and-configure-nginx">7 Install and configure Nginx</h2>
+<h2 id="7---install-and-configure-nginx">7 - Install and configure Nginx</h2>
 <ol>
 <li><a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04">full reference 1 -DigitalOcean</a></li>
 <li><a href="https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04">full reference 2 - DigitalOcean</a></li>
@@ -378,7 +376,7 @@ read and execute permissions to groups and others</li>
 <li>Finally, type your VPS <code>ipv4</code> on browser and check if changes applied. 
 Use <code>ctrl f5</code> to reload clearing cache.</li>
 </ol>
-<h2 id="8-enable-https-on-nginx-install-tlsssl-certificates-certbot">8 Enable HTTPS on Nginx: Install TLS/SSL certificates (Certbot)</h2>
+<h2 id="8---enable-https-on-nginx-install-tlsssl-certificates-certbot">8 - Enable HTTPS on Nginx: Install TLS/SSL certificates (Certbot)</h2>
 <p><a href="https://certbot.eff.org/instructions?ws=nginx&amp;os=pip">full reference  - certbot</a></p>
 <h3 id="80-remove-old-certbot-installed">8.0 Remove old Certbot installed</h3>
 <pre><code class="language-bash">sudo apt-get remove certbot
@@ -405,7 +403,7 @@ server over port <code>80</code>.</p>
 <pre><code>sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com -v
 </code></pre>
 <p><strong>Finally your (test) website should be acessable at <a href="http://www.yourdomain.com">www.yourdomain.com</a>!!!</strong></p>
-<h2 id="9-setup-ssh-for-github-and-clone-your-nodejs-repository">9 Setup SSH for github and clone your Node.js repository</h2>
+<h2 id="9---setup-ssh-for-github-and-clone-your-nodejs-repository">9 - Setup SSH for github and clone your Node.js repository</h2>
 <ol start="0">
 <li><a href="https://www.atlassian.com/git/tutorials/install-git#linux">Full reference 0 - Atlassian</a></li>
 <li><a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account">Full reference 1 - Github</a></li>
@@ -458,7 +456,7 @@ git clone git@github.com:&lt;user&gt;/&lt;repo-path&gt;.git
 <pre><code class="language-bash">cd &lt;your_repo&gt;
 npm install
 </code></pre>
-<h2 id="10-run-your-node-process-as-a-deamon-pm2">10 Run your node process as a deamon (PM2)</h2>
+<h2 id="10---run-your-node-process-as-a-deamon-pm2">10 - Run your node process as a deamon (PM2)</h2>
 <p><a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04">Source - DigitalOcean</a></p>
 <p>PM2 allows running the node application as a background process and facilitates
 integration with nginx proxy. </p>
@@ -528,3 +526,8 @@ reboot the system for pm2 to properly apply its changes:</li>
 <pre><code>sudo systemctl restart nginx
 </code></pre>
 <p><strong>Your website is now fully running at your domain.com!!</strong></p>
+<p>Until implementing a proper CI/CD, you can update you website by: </p>
+<pre><code class="language-bash">git pull
+pm2 restart server
+sudo systemctl restart nginx
+</code></pre>

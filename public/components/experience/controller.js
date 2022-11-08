@@ -8,7 +8,7 @@ export const renderExperience = async function(viewRoot, newExperience){
 }
 
 const renderView = async function(viewRoot){
-    const view = await fetch('components/experience/view.html')
+    const view = await fetch('/components/experience/view.html')
         .then(res =>{ return res.text() })
     viewRoot.innerHTML = view
 }
