@@ -24,7 +24,7 @@ const getContentRender = function(){
 }
 
 const renderView = async function(root){
-    const view = await fetch('components/index/view.html')
+    const view = await fetch('/components/index/view.html')
         .then(res =>{ return res.text() })
     root.innerHTML = view
 }

@@ -8,7 +8,7 @@ export const renderProject = async function(viewRoot, newProject){
 }
 
 const renderView = async function(viewRoot){
-    const view = await fetch('components/project/view.html')
+    const view = await fetch('/components/project/view.html')
         .then(res =>{ return res.text() })
     viewRoot.innerHTML = view
 }

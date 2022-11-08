@@ -528,3 +528,8 @@ reboot the system for pm2 to properly apply its changes:</li>
 <pre><code>sudo systemctl restart nginx
 </code></pre>
 <p><strong>Your website is now fully running at your domain.com!!</strong></p>
+<p>Until implementing a proper CI/CD, you can update you website by: </p>
+<pre><code class="language-bash">git pull
+pm2 restart server
+sudo systemctl restart nginx
+</code></pre>

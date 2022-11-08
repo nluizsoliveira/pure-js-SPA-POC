@@ -7,7 +7,7 @@ export const renderResume = async function(viewRoot){
 }
 
 const renderView = async function(viewRoot){
-    const view = await fetch('components/resume/view.html')
+    const view = await fetch('/components/resume/view.html')
         .then(res =>{ return res.text() })
     viewRoot.innerHTML = view
 }

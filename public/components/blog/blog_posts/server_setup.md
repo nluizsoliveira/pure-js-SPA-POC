@@ -693,3 +693,10 @@ sudo systemctl restart nginx
 
 **Your website is now fully running at your domain.com!!**
 
+Until implementing a proper CI/CD, you can update you website by: 
+
+```bash
+git pull
+pm2 restart server
+sudo systemctl restart nginx
+```

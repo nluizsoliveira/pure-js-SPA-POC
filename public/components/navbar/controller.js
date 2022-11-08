@@ -8,7 +8,7 @@ export const renderNav = async function(root, state, parentStateLifter){
 }
 
 const renderView = async function(root){
-    const view = await fetch('components/navbar/view.html')
+    const view = await fetch('/components/navbar/view.html')
         .then(res =>{ return res.text() })
     root.innerHTML = view
 }
