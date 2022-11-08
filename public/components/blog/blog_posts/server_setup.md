@@ -1,42 +1,43 @@
 # Steps to configure a VPS for hosting Node applications
 
-This is a summary of (many) tutorials on deploying a **Node-served webpage** 
-on your **own domain**. Each step contains a reference to the source material
+This is a summary of (many) tutorials on deploying a Node-served webpage
+on your own domain. Each step contains a reference to the source material
 (hostinger, digitalocean, nginx and certbot tutorials) 
 
-STEPS COVERED: 
+### STEPS COVERED: 
 
-0. Overview on domains, hosting and VPS
-1. Point domain to VPS IPV4 and IPV6 (DNS Record)
-2. First VPS login and packages updating
-3. Create user in sudo group
-4. Create a public key, enable SSH-KEY login and disable user/password login
-5. Configure Firewall (UFW)
-6. Install Node
-7. Install and configure Nginx
-8. Enable HTTPS on NGINX: Install TLS/SSL Certificates (Certbot)
-9. Setup SSH for github and clone your Node.js repository
-10. Run your node process as a deamon (PM2)
-11. Setup Nginx as a Reverse Proxy Server
+0. **Overview on domains, hosting and VPS** 
+1. **Point domain to VPS IPV4 and IPV6 (DNS Record)** 
+2. **First VPS login and packages updating** 
+3. **Create user in sudo group** 
+4. **Create a public key, enable SSH-KEY login and disable user/password login** 
+5. **Configure Firewall (UFW)** 
+6. **Install Node** 
+7. **Install and configure Nginx** 
+8. **Enable HTTPS on NGINX: Install TLS/SSL Certificates (Certbot)** 
+9. **Setup SSH for github and clone your Node.js repository** 
+10. **Run your node process as a deamon (PM2)** 
+11. **Setup Nginx as a Reverse Proxy Server** 
 
-PREMISES: 
+### PREMISES: 
 
-1. My VPS is at hostinger. **Most steps remain the same regardless of your vps provider**.The exception is **changing DNS record**, which is done through 
+1. My VPS is at hostinger. Most steps remain the same regardless of your vps provider.The exception is changing DNS record, which is done through 
 hostingers online GUI. 
-2. Steps assume **ubuntu** as client's distro and **ubuntu 18.04** 
+2. Steps assume ubuntu as client's distro and ubuntu 18.04.
 as the VPS distro. 
 3. If you're using Windows as a client, SSH steps can be done through 
 [putty](https://www.hostinger.com/tutorials/how-to-use-putty-ssh)
 
 
-! WARNING !
+### ! WARNING !
 
-1. Although every article summarized was written by specialized professionals, 
-**I am not a senior specialized professional**. Do not take this summary steps as enough to fully secure your application. 
-2. Web security, Sysadmin, Infra and Devops are careers theirselves.**I do not recommend configuring a server from scratch without support from senior specialized professionals**. 
+Although every article summarized was written by specialized professionals, 
+I am not a senior specialized professional. Do not take this summary steps as enough to fully secure your application. 
+
+Web security, Sysadmin, Infra and Devops are careers theirselves.I do not recommend configuring a server from scratch without support from senior specialized professionals. 
 
 
-I only did it for the sake of **learning and ecouraging others to learn more about deploy.**
+I only did it for the sake of learning and ecouraging others to learn more about deploy.
 
 ## 0 - Overview on VPSs, domains and Hosting
 To deploy a page on your own website, you'll need: 
@@ -45,14 +46,14 @@ To deploy a page on your own website, you'll need:
 2. A Host - An actual machine, with IPV4/IPV6 ips, in which a 
 webserver will listen and respond to HTTP/S requests
 
-I used **hostinger** for both [buying a domain](https://www.hostinger.com.br/registro-de-dominio) and renting a hosting service (in my case, a VPS). 
+I used hostinger for both [buying a domain](https://www.hostinger.com.br/registro-de-dominio) and renting a hosting service (in my case, a VPS). 
 
 If your website is static (Pure HTML/CSS/Javascript) you can use a 
 [simpler hosting solution](https://www.hostinger.com.br/hospedagem-de-sites) 
 that allows uploading assets and setting a `index.html`. 
 All server configuration is automated through an online GUI.  
 
-That's not the case for you **Node app**, that exposes a port and defines routes.
+That's not the case for you Node app, that exposes a port and defines routes.
 Some hosting platforms provide automatized solutions for that. For sake of learning
 more about deploying, I've chosen [VPS](https://www.hostinger.com.br/servidor-vps), - Virtual Private Server, whichs requires further configuration. 
 
@@ -64,7 +65,7 @@ DNS propagation can take up to 24h, which is the reason we're setting DNS first.
 ### 1.0 Discover your VPS IPV4 and IPV6
 If you're using hostinger it's [here](https://hpanel.hostinger.com/servers/)
 ### 1.1 Delete older DNS Records
-At `hpanel.hostinger.com/domain/<your_domain.com>/dns`, delete: 
+At **hpanel.hostinger.com/domain/your_domain.com/dns**, delete: 
 
 1. All records type `A` with names exactly `@` or `www`.  
 2. All records type `AAAA` with names exactly `@` or `www`.
@@ -83,7 +84,7 @@ Don't delete any other records.
 
 Check it at https://www.whatsmydns.net/
 
-## 2 First VPS login and packages updating
+## 2 - First VPS login and packages updating
 [Full Reference - DigitalOcean](https://www.hostinger.com/tutorials/getting-started-with-vps-hosting)
 
 We'll setup SSH keys as soon as possible. But before that we'll update 
@@ -109,7 +110,7 @@ apt update
 apt upgrade
 ```
 
-## 3 Create user in sudo group
+## 3 - Create user in sudo group
 It's a good practice to avoid operating as root when not necessary. 
 
 ### 3.1 Create Username
@@ -130,7 +131,7 @@ usermod -aG sudo username
 su - username
 ```
 
-## 4 Create a public key, enable SSH-KEY login and disable user/password login
+## 4 - Create a public key, enable SSH-KEY login and disable user/password login
 1. [Full Reference 1 - Hostinger](https://www.hostinger.com/tutorials/ssh/how-to-set-up-ssh-keys)
 2. [Full Reference 2 - DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-use-ssh-to-connect-to-a-remote-server)
 
@@ -226,7 +227,7 @@ into `root` any longer.
 If for some reason will need to access `root` user, do `sudo su`. If for some 
 reason you need to enable ssh login to root, follow [this tutorial](https://serverfault.com/questions/140421/how-to-set-public-ssh-key-for-root-user-on-server)
 
-## 5 Configure Firewall (UFW)
+## 5 - Configure Firewall (UFW)
 [Full reference - DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-setup-a-firewall-with-ufw-on-an-ubuntu-and-debian-cloud-server)
 
 Iptables is the native program for configuring ipv4 packages filtering. 
@@ -316,7 +317,7 @@ sudo ufw reset
 sudo ufw disable
 ```
 
-## 6 Install Node
+## 6 - Install Node
 [Full Reference - LowEndBox](https://lowendbox.com/blog/how-to-set-up-a-node-js-application-on-ubuntu-16-04-vps/)
 
 ### 6.1 Install latest Node version that supports you VPS OS
@@ -331,7 +332,7 @@ sudo apt install -y nodejs gcc g++ make
 node -v #Check if installation was sucessful
 npm -v #Check if NPM was installed
 ```
-## 7 Install and configure Nginx
+## 7 - Install and configure Nginx
 1. [full reference 1 -DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04)
 2. [full reference 2 - DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04)
 3. [full reference 3 - Thomas hunter article](https://medium.com/intrinsic-blog/why-should-i-use-a-reverse-proxy-if-node-js-is-production-ready-5a079408b2ca)
@@ -496,7 +497,7 @@ sudo systemctl restart nginx
 10. Finally, type your VPS `ipv4` on browser and check if changes applied. 
 Use `ctrl f5` to reload clearing cache. 
 
-## 8 Enable HTTPS on Nginx: Install TLS/SSL certificates (Certbot)
+## 8 - Enable HTTPS on Nginx: Install TLS/SSL certificates (Certbot)
 [full reference  - certbot](https://certbot.eff.org/instructions?ws=nginx&os=pip)
 
 ### 8.0 Remove old Certbot installed
@@ -540,7 +541,7 @@ sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com -v
 
 **Finally your (test) website should be acessable at www.yourdomain.com!!!**
 
-## 9 Setup SSH for github and clone your Node.js repository
+## 9 - Setup SSH for github and clone your Node.js repository
 0. [Full reference 0 - Atlassian](https://www.atlassian.com/git/tutorials/install-git#linux)
 1. [Full reference 1 - Github](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
 2. [Full reference 2 - Github](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
@@ -608,7 +609,7 @@ cd <your_repo>
 npm install
 ```
 
-## 10 Run your node process as a deamon (PM2)
+## 10 - Run your node process as a deamon (PM2)
 [Source - DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04)
 
 PM2 allows running the node application as a background process and facilitates
