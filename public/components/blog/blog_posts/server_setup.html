@@ -1,0 +1,530 @@
+<h1 id="steps-to-configure-a-vps-for-hosting-node-applications">Steps to configure a VPS for hosting Node applications</h1>
+<p>This is a summary of (many) tutorials on deploying a <strong>Node-served webpage</strong> 
+on your <strong>own domain</strong>. Each step contains a reference to the source material
+(hostinger, digitalocean, nginx and certbot tutorials) </p>
+<p>STEPS COVERED: </p>
+<ol start="0">
+<li>Overview on domains, hosting and VPS</li>
+<li>Point domain to VPS IPV4 and IPV6 (DNS Record)</li>
+<li>First VPS login and packages updating</li>
+<li>Create user in sudo group</li>
+<li>Create a public key, enable SSH-KEY login and disable user/password login</li>
+<li>Configure Firewall (UFW)</li>
+<li>Install Node</li>
+<li>Install and configure Nginx</li>
+<li>Enable HTTPS on NGINX: Install TLS/SSL Certificates (Certbot)</li>
+<li>Setup SSH for github and clone your Node.js repository</li>
+<li>Run your node process as a deamon (PM2)</li>
+<li>Setup Nginx as a Reverse Proxy Server</li>
+</ol>
+<p>PREMISES: </p>
+<ol>
+<li>My VPS is at hostinger. <strong>Most steps remain the same regardless of your vps provider</strong>.The exception is <strong>changing DNS record</strong>, which is done through 
+hostingers online GUI. </li>
+<li>Steps assume <strong>ubuntu</strong> as client&#39;s distro and <strong>ubuntu 18.04</strong> 
+as the VPS distro. </li>
+<li>If you&#39;re using Windows as a client, SSH steps can be done through 
+<a href="https://www.hostinger.com/tutorials/how-to-use-putty-ssh">putty</a></li>
+</ol>
+<p>! WARNING !</p>
+<ol>
+<li>Although every article summarized was written by specialized professionals, 
+<strong>I am not a senior specialized professional</strong>. Do not take this summary steps as enough to fully secure your application. </li>
+<li>Web security, Sysadmin, Infra and Devops are careers theirselves.<strong>I do not recommend configuring a server from scratch without support from senior specialized professionals</strong>.</li>
+</ol>
+<p>I only did it for the sake of <strong>learning and ecouraging others to learn more about deploy.</strong></p>
+<h2 id="0---overview-on-vpss-domains-and-hosting">0 - Overview on VPSs, domains and Hosting</h2>
+<p>To deploy a page on your own website, you&#39;ll need: </p>
+<ol>
+<li>A domain  - <code>www.yourdomain.com</code></li>
+<li>A Host - An actual machine, with IPV4/IPV6 ips, in which a 
+webserver will listen and respond to HTTP/S requests</li>
+</ol>
+<p>I used <strong>hostinger</strong> for both <a href="https://www.hostinger.com.br/registro-de-dominio">buying a domain</a> and renting a hosting service (in my case, a VPS). </p>
+<p>If your website is static (Pure HTML/CSS/Javascript) you can use a 
+<a href="https://www.hostinger.com.br/hospedagem-de-sites">simpler hosting solution</a> 
+that allows uploading assets and setting a <code>index.html</code>. 
+All server configuration is automated through an online GUI.  </p>
+<p>That&#39;s not the case for you <strong>Node app</strong>, that exposes a port and defines routes.
+Some hosting platforms provide automatized solutions for that. For sake of learning
+more about deploying, I&#39;ve chosen <a href="https://www.hostinger.com.br/servidor-vps">VPS</a>, - Virtual Private Server, whichs requires further configuration. </p>
+<h2 id="1---point-domain-to-vps-ipv4-dns-record">1 - Point domain to VPS IPV4 (DNS Record)</h2>
+<p><a href="https://www.hostinger.com/tutorials/dns/how-to-point-domain-to-vps.">Full Reference - Hostinger</a></p>
+<p>DNS propagation can take up to 24h, which is the reason we&#39;re setting DNS first.  </p>
+<h3 id="10-discover-your-vps-ipv4-and-ipv6">1.0 Discover your VPS IPV4 and IPV6</h3>
+<p>If you&#39;re using hostinger it&#39;s <a href="https://hpanel.hostinger.com/servers/">here</a></p>
+<h3 id="11-delete-older-dns-records">1.1 Delete older DNS Records</h3>
+<p>At <code>hpanel.hostinger.com/domain/&lt;your_domain.com&gt;/dns</code>, delete: </p>
+<ol>
+<li>All records type <code>A</code> with names exactly <code>@</code> or <code>www</code>.  </li>
+<li>All records type <code>AAAA</code> with names exactly <code>@</code> or <code>www</code>.</li>
+<li>All records type <code>CNAME</code> with names exactly <code>@</code> or <code>www</code>.</li>
+</ol>
+<p>Don&#39;t delete any other records. </p>
+<h3 id="12-create-new-dns-records-pointing-to-your-vps-ip">1.2 Create new DNS Records pointing to your VPS IP</h3>
+<ol>
+<li>Create a record type <code>A</code> name <code>@</code> pointing to your VPS IPV4</li>
+<li>Create a record type <code>A</code> name <code>www</code> pointing to your VPS IPV4</li>
+<li>Create a record type <code>AAAA</code> name <code>@</code> pointing to your VPS IPV6</li>
+<li>Create a record type <code>AAAA</code> name <code>www</code> pointing to your VPS IPV6</li>
+</ol>
+<h3 id="13-verify-dns-propagation">1.3 Verify DNS propagation</h3>
+<p>Check it at <a href="https://www.whatsmydns.net/">https://www.whatsmydns.net/</a></p>
+<h2 id="2-first-vps-login-and-packages-updating">2 First VPS login and packages updating</h2>
+<p><a href="https://www.hostinger.com/tutorials/getting-started-with-vps-hosting">Full Reference - DigitalOcean</a></p>
+<p>We&#39;ll setup SSH keys as soon as possible. But before that we&#39;ll update 
+packages and create an user. </p>
+<h3 id="21-first-vps-login">2.1 First VPS Login</h3>
+<p>On linux, the ssh connection syntax is: </p>
+<pre><code class="language-bash">ssh &lt;username&gt;@&lt;ip&gt; -p &lt;port&gt;
+</code></pre>
+<p>Use <code>root</code> as there&#39;s no other user yet. Standard SSH <code>port</code> is 22. </p>
+<pre><code class="language-bash">ssh root@&lt;ip&gt; -p 22
+</code></pre>
+<h3 id="22-update-packages">2.2 Update Packages</h3>
+<pre><code class="language-bash">apt update
+apt upgrade
+</code></pre>
+<h2 id="3-create-user-in-sudo-group">3 Create user in sudo group</h2>
+<p>It&#39;s a good practice to avoid operating as root when not necessary. </p>
+<h3 id="31-create-username">3.1 Create Username</h3>
+<pre><code class="language-bash">adduser username
+</code></pre>
+<p>Select a password and press ENTER for the user info settings. </p>
+<h3 id="32-add-user-to-sudo-group">3.2 Add user to sudo group:</h3>
+<pre><code class="language-bash">usermod -aG sudo username
+</code></pre>
+<h3 id="33-swap-contet-to-new-user">3.3 Swap contet to new user</h3>
+<pre><code class="language-bash">su - username
+</code></pre>
+<h2 id="4-create-a-public-key-enable-ssh-key-login-and-disable-userpassword-login">4 Create a public key, enable SSH-KEY login and disable user/password login</h2>
+<ol>
+<li><a href="https://www.hostinger.com/tutorials/ssh/how-to-set-up-ssh-keys">Full Reference 1 - Hostinger</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-to-connect-to-a-remote-server">Full Reference 2 - DigitalOcean</a></li>
+</ol>
+<h3 id="41-generate-ssh-keys">4.1 Generate SSH keys</h3>
+<pre><code class="language-bash"># Run on the COMPUTER YOU&#39;LL USE TO CONNECT TO VPS, NOT THE VPS ITSELF
+cd ~/.ssh/
+ssh-keygen -t rsa
+</code></pre>
+<p>Select a filename for saving your ssh key. I&#39;ll use <code>sitessh</code>. 
+Enter a passphrase. </p>
+<p>This will generate a pair of public/private ssh key, <code>sitessh</code> (private) 
+and <code>sitessh.pub</code> (public), both at <code>/home/yourUser/.ssh</code>. <strong>Do not share your
+private ssh key</strong>.  </p>
+<h3 id="42-copy-public-ssh-key-to-clipboard">4.2 Copy public SSH key to clipboard</h3>
+<p>Do</p>
+<pre><code class="language-bash">cat siteuser.pub 
+</code></pre>
+<p>And copy the output to your clipboard. </p>
+<h3 id="43-enable-ssh-key-login">4.3 Enable SSH-Key login</h3>
+<p>Login again at your vps at your newly created user. </p>
+<p>NOTE: <code>~/</code> is a shortcut to your <code>/home/currentUser</code> folder. This process will 
+enable ssh key login to the current terminal user. If you need multiple users 
+you&#39;ll have to repeat the process multiple times. </p>
+<ol start="0">
+<li>Be sure to be in your newly created user context.  </li>
+<li>Create a <code>.ssh</code> folder at <code>~/</code></li>
+<li>Give owner user read, write and execute permissions</li>
+<li>create and open an <code>authorized_keys</code> file at <code>~/.ssh</code></li>
+</ol>
+<pre><code class="language-bash"># Run on your VPS at you new user account
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+vim ~/.ssh/authorized_keys
+</code></pre>
+<p>After opening the file: </p>
+<ol>
+<li>type <code>i</code> to enable write mode</li>
+<li>press <code>shift insert</code> to paste your pub ssh key from clipboard</li>
+<li>press <code>esc</code> to exit write mode, then <code>:wq</code> to exit saving changes.</li>
+<li>Add read and write permissions to <code>authorized_keys</code></li>
+</ol>
+<pre><code class="language-bash">chmod 600 ~/.ssh/authorized_keys
+</code></pre>
+<p>Exit user with </p>
+<pre><code>exit
+</code></pre>
+<h3 id="44-test-if-your-ssh-key-login-is-working">4.4 Test if your ssh-key login is working</h3>
+<p>At your client computer, try to ssh connect to your user: </p>
+<pre><code class="language-bash">ssh -p 22 &lt;user&gt;@&lt;ip&gt;
+</code></pre>
+<h3 id="45-disable-userpassword-login">4.5 Disable user/password login</h3>
+<p>After login into VPS, open SSH config file: </p>
+<pre><code class="language-bash">sudo vim /etc/ssh/sshd_config
+</code></pre>
+<p>There will be a key/value pair:</p>
+<pre><code class="language-bash">#PasswordAuthentication yes
+</code></pre>
+<p>Delete the comment with <code>shift backspace</code> and set the key to no:</p>
+<pre><code class="language-bash">PasswordAuthentication no
+</code></pre>
+<p>Reload ssh deamon</p>
+<pre><code class="language-bash">sudo systemctl reload ssh
+</code></pre>
+<p>This will disable user/password login to all users, including <code>root</code>. Notice your
+SSH key was set only for your new <code>user</code>. Therefore you&#39;ll not be able to login 
+into <code>root</code> any longer. </p>
+<p>If for some reason will need to access <code>root</code> user, do <code>sudo su</code>. If for some 
+reason you need to enable ssh login to root, follow <a href="https://serverfault.com/questions/140421/how-to-set-public-ssh-key-for-root-user-on-server">this tutorial</a></p>
+<h2 id="5-configure-firewall-ufw">5 Configure Firewall (UFW)</h2>
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-setup-a-firewall-with-ufw-on-an-ubuntu-and-debian-cloud-server">Full reference - DigitalOcean</a></p>
+<p>Iptables is the native program for configuring ipv4 packages filtering. 
+UFW (Uncomplicated Firewall) is an interface for setting up iptables 
+more smoothly. </p>
+<h3 id="51-install-ufw">5.1 Install UFW</h3>
+<p>Usually UFW comes pre-installed but disabled in VPSs by default. If that&#39;s not
+the case, install with:</p>
+<pre><code>sudo apt install ufw
+</code></pre>
+<h3 id="52-deny-all-incoming-connections">5.2 Deny all incoming connections</h3>
+<p>The approach is to deny all conections by default and create a restricte list
+with the allowed connections. </p>
+<pre><code>sudo ufw default deny incoming
+</code></pre>
+<h3 id="53-allow-all-outgoing-connections">5.3 Allow all outgoing connections</h3>
+<pre><code>sudo ufw default allow outgoing
+</code></pre>
+<h3 id="54-allow-incoming-ssh-connections">5.4 Allow incoming SSH connections</h3>
+<p>By standard ssh connections use tcp protocol over port 22. </p>
+<p>You can allow this specific connection</p>
+<pre><code>sudo ufw allow 22/tcp
+</code></pre>
+<p>Or allow the alias</p>
+<pre><code>sudo ufw allow ssh
+</code></pre>
+<p>Both approaches have the same effect. </p>
+<h3 id="55-check-current-rules-table">5.5 Check current rules table</h3>
+<pre><code class="language-bash">sudo ufw status numbered
+</code></pre>
+<p>As I just configured SSH connections, this is my table:</p>
+<pre><code class="language-bash">Status: active
+
+     To                         Action      From
+     --                         ------      ----
+[ 1] 22/tcp                     ALLOW IN    Anywhere                  
+[ 2] 22/tcp (v6)                ALLOW IN    Anywhere (v6)             
+</code></pre>
+<p>We will enable HTTP/HTTPs later when configuring NGINX. 
+We will use git for transfering files. If that&#39;s not your case, enable sftp. </p>
+<h3 id="56-enable-firewall">5.6 Enable Firewall</h3>
+<p>After setting all your desired rules 
+<strong>(be sure to allow ssh otherwise you will get locked)</strong> enable the firewall:</p>
+<pre><code class="language-bash">sudo ufw enable
+</code></pre>
+<h3 id="additional-useful-ufw-commands">(Additional useful UFW Commands)</h3>
+<ol>
+<li>Drop a rule
+Notice the numerical column on the table. You can drop a rule by:</li>
+</ol>
+<pre><code class="language-bash"># Not a step 
+sudo ufw delete &lt;ruleNumber&gt;
+</code></pre>
+<ol start="2">
+<li>Reset UFW to default settings:</li>
+</ol>
+<pre><code class="language-bash"># Not a step 
+sudo ufw reset
+</code></pre>
+<ol start="3">
+<li>Disable UFW</li>
+</ol>
+<pre><code class="language-bash"># Not a step 
+sudo ufw disable
+</code></pre>
+<h2 id="6-install-node">6 Install Node</h2>
+<p><a href="https://lowendbox.com/blog/how-to-set-up-a-node-js-application-on-ubuntu-16-04-vps/">Full Reference - LowEndBox</a></p>
+<h3 id="61-install-latest-node-version-that-supports-you-vps-os">6.1 Install latest Node version that supports you VPS OS</h3>
+<p>I&#39;ll use Node 16</p>
+<pre><code class="language-bash">cd /tmp
+suo apt install curl -y
+curl -sLO https://deb.nodesource.com/setup_16.x
+sudo bash setup_16.x
+sudo apt install -y nodejs gcc g++ make
+node -v #Check if installation was sucessful
+npm -v #Check if NPM was installed
+</code></pre>
+<h2 id="7-install-and-configure-nginx">7 Install and configure Nginx</h2>
+<ol>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04">full reference 1 -DigitalOcean</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04">full reference 2 - DigitalOcean</a></li>
+<li><a href="https://medium.com/intrinsic-blog/why-should-i-use-a-reverse-proxy-if-node-js-is-production-ready-5a079408b2ca">full reference 3 - Thomas hunter article</a></li>
+</ol>
+<h3 id="71-what-is-a-reverse-proxy-and-why-use-nginx">7.1 What is a reverse proxy and why use Nginx</h3>
+<p>Reverse proxy is an intermediate web server that will:</p>
+<ol>
+<li>Receive requests</li>
+<li>Optionally modify requests</li>
+<li>Forward requests to another web server</li>
+<li>Await for the forwarded request to be responsed</li>
+<li>Intercept the forwarded response</li>
+<li>Optionally modify the forwarded response</li>
+<li>Response to the original client</li>
+</ol>
+<p>It&#39;s a good idea to use nginx for many reasons: </p>
+<ol>
+<li>Enable HTTPS over servers that only suport HTTP</li>
+<li>Compress responses</li>
+<li>Clean up malformated requests</li>
+<li>Dispatch requests to multiple backend instances</li>
+</ol>
+<p>Although modern Node versions can handle many of the tasks above, it&#39;s a good 
+idea to use Nginx as a layer that only handles/enchaces requests while 
+keeping Node handling only the necessary backend core operations.    </p>
+<h2 id="72-installing-nginx">7.2 Installing Nginx</h2>
+<pre><code class="language-bash">sudo apt update
+sudo apt upgrade -y
+sudo apt install nginx -y
+</code></pre>
+<h2 id="73-enabling-ningx-on-firewall">7.3 Enabling Ningx on Firewall</h2>
+<pre><code class="language-bash">sudo ufw allow &#39;Nginx Full&#39;
+</code></pre>
+<h2 id="74-test-if-nginx-is-working">7.4 Test if nginx is working</h2>
+<p>Open your VPS <code>ipv4</code> address on browser. You should see Nginx default page. 
+If that&#39;s not the case, your VPS is probably configured to use <code>apache2</code> 
+as standard server. </p>
+<p>Check if Nginx is runnig/your vps is running apache2: </p>
+<pre><code class="language-bash">systemctl status nginx
+systemctl status apache2
+</code></pre>
+<p>If that&#39;s the case, let&#39;s unninstall apache and restart Nginx: </p>
+<pre><code class="language-bash">sudo service apache2 stop
+sudo apt-get purge apache2 apache2-utils apache2-bin apache2.2-common -y
+sudo apt-get autoremove
+sudo rm -rf /etc/apache2
+sudo systemctl enable nginx
+sudo systemctl restart nginx
+</code></pre>
+<p>Check again: </p>
+<pre><code class="language-bash">systemctl status nginx
+systemctl status apache2
+</code></pre>
+<p>Don&#39;t worry if you still see apache2 initial page at this point. </p>
+<p>It happens because both nginx and apache2 use <code>/var/www/html</code> as the standard 
+folder for serving content. Nginx is the one serving apache2 standard HTML.</p>
+<h3 id="75-set-up-a-server-block">7.5 Set up a Server Block</h3>
+<p>Server Blocks are used to encapsulate a domain. The default server block is 
+configured to serve files ate <code>/var/www/html</code>. </p>
+<ol>
+<li>Create a server block for your domain:</li>
+</ol>
+<pre><code class="language-bash">sudo mkdir -p /var/www/yourdomain.com/html
+</code></pre>
+<ol start="2">
+<li>Assign ownership of the directory with the $USER environment variable</li>
+</ol>
+<pre><code class="language-bash">sudo chown -R $USER:$USER /var/www/yourdomain.com/html
+</code></pre>
+<ol start="3">
+<li>Allow the owner to read, write, and execute the files while granting only 
+read and execute permissions to groups and others</li>
+</ol>
+<pre><code class="language-bash">sudo chmod -R 755 /var/www/yourdomain.com
+</code></pre>
+<ol start="4">
+<li>Create a sample index.html page and fill it with a testing content</li>
+</ol>
+<pre><code class="language-bash">vim /var/www/yourdomain.com/html/index.html
+</code></pre>
+<pre><code>&lt;html&gt;
+     Your server block is being served 
+&lt;/html&gt;
+</code></pre>
+<ol start="5">
+<li>Create a configuration file for your server block</li>
+</ol>
+<pre><code class="language-bash">sudo vim /etc/nginx/sites-available/yourdomain.com
+</code></pre>
+<p>and paste inside it the configuration: </p>
+<pre><code>server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/yourdomain.com/html;
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name yourdomain.com www.yourdomain.com;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+
+        location /.well-known/acme-challenge {
+          default_type text/plain;
+          root /etc/letsencrypt/webroot;
+        }
+}
+</code></pre>
+<ol start="6">
+<li>Enable the file by creating a link from it to the sites-enabled directory, which Nginx reads from during startup:</li>
+</ol>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/yourdomain.com /etc/nginx/sites-enabled/
+</code></pre>
+<ol start="7">
+<li>Uncomment and adjust<code>server_names_hash_bucket_size</code> at <code>/etc/nginx/nginx.conf</code> to 64 (this avoid a possible hash bucket memory problem that can arise from adding additional server names)</li>
+</ol>
+<pre><code class="language-bash">sudo vim /etc/nginx/nginx.conf
+</code></pre>
+<p>Also change <code>include /etc/nginx/sites-enabled/*;</code> to <code>include /etc/nginx/sites-enabled/yourdomain.com;</code>
+8. Run nginx test:</p>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<ol start="9">
+<li>Restart nginx to apply changes:</li>
+</ol>
+<pre><code>sudo systemctl restart nginx
+</code></pre>
+<ol start="10">
+<li>Finally, type your VPS <code>ipv4</code> on browser and check if changes applied. 
+Use <code>ctrl f5</code> to reload clearing cache.</li>
+</ol>
+<h2 id="8-enable-https-on-nginx-install-tlsssl-certificates-certbot">8 Enable HTTPS on Nginx: Install TLS/SSL certificates (Certbot)</h2>
+<p><a href="https://certbot.eff.org/instructions?ws=nginx&amp;os=pip">full reference  - certbot</a></p>
+<h3 id="80-remove-old-certbot-installed">8.0 Remove old Certbot installed</h3>
+<pre><code class="language-bash">sudo apt-get remove certbot
+</code></pre>
+<h3 id="81-install-certbot-dependencies">8.1 Install Certbot Dependencies</h3>
+<p>Hostinger VPS has issues with <code>snap</code>. Therefore we will use Python&#39;s <code>pip</code> to 
+install certbot. </p>
+<pre><code class="language-bash">sudo apt update
+sudo apt install python3 python3-venv libaugeas0
+</code></pre>
+<h3 id="82-setup-python-venv">8.2 Setup Python venv</h3>
+<pre><code class="language-bash">sudo python3 -m venv /opt/certbot/
+sudo /opt/certbot/bin/pip install --upgrade pip
+</code></pre>
+<h3 id="83-install-certbot">8.3 Install Certbot</h3>
+<pre><code class="language-bash">sudo /opt/certbot/bin/pip install certbot certbot-nginx
+</code></pre>
+<h3 id="84-prepare-certbot-command">8.4 Prepare certbot command</h3>
+<pre><code class="language-bash">sudo ln -s /opt/certbot/bin/certbot /usr/bin/certbot
+</code></pre>
+<h3 id="85-generate-and-install-certificates">8.5 Generate and install certificates</h3>
+<p>This will only work if you already have a nginx instance providing an http 
+server over port <code>80</code>.</p>
+<pre><code>sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com -v
+</code></pre>
+<p><strong>Finally your (test) website should be acessable at <a href="http://www.yourdomain.com">www.yourdomain.com</a>!!!</strong></p>
+<h2 id="9-setup-ssh-for-github-and-clone-your-nodejs-repository">9 Setup SSH for github and clone your Node.js repository</h2>
+<ol start="0">
+<li><a href="https://www.atlassian.com/git/tutorials/install-git#linux">Full reference 0 - Atlassian</a></li>
+<li><a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account">Full reference 1 - Github</a></li>
+<li><a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">Full reference 2 - Github</a></li>
+</ol>
+<h2 id="90-install-and-config-git">9.0 Install and config git</h2>
+<pre><code>sudo apt-get update
+sudo apt-get install git
+git config --global user.name &quot;&lt;your name&gt;&quot;
+git config --global user.email &quot;&lt;your email&gt;&quot; 
+git config --global user.username&quot;&lt;your username&gt;&quot; 
+</code></pre>
+<h3 id="91-generate-ssh-keys--your-vps">9.1 Generate SSH keys @ your vps</h3>
+<pre><code>cd ~/.ssh/
+ssh-keygen -t ed25519 -C &quot;your_git_email@example.com&quot;
+</code></pre>
+<p>Call it <code>gitkey</code>. </p>
+<ol>
+<li>Start to your <code>ssh-agent</code>:</li>
+</ol>
+<pre><code class="language-bash">eval &quot;$(ssh-agent -s)&quot;
+</code></pre>
+<ol start="2">
+<li>Add the private key to your agent:</li>
+</ol>
+<pre><code class="language-bash">ssh-add gitkey
+</code></pre>
+<ol start="3">
+<li>If you&#39;re facing issues with ssh not working on reboot, add the two commands 
+above to your <code>~./bashrc</code> file.</li>
+</ol>
+<pre><code class="language-bash">vim ~/.bashrc
+# Paste both commands above at the bottom of your ~/.bashrc
+eval &quot;$(ssh-agent -s)&quot;
+ssh-add ~/.ssh/gitkey
+</code></pre>
+<p>vim 
+4. Copy the public key content: </p>
+<pre><code class="language-bash">cat gitkey.pub
+</code></pre>
+<ol start="5">
+<li>Paste it at <a href="https://github.com/settings/ssh/new">Github SSH key manager</a>
+as an <code>Authentication Key</code></li>
+</ol>
+<h3 id="92-clone-your-repo-using-ssh">9.2 Clone your repo using ssh</h3>
+<pre><code class="language-bash">cd ~
+git clone git@github.com:&lt;user&gt;/&lt;repo-path&gt;.git
+</code></pre>
+<p>Also enter your project and install your dependencies:</p>
+<pre><code class="language-bash">cd &lt;your_repo&gt;
+npm install
+</code></pre>
+<h2 id="10-run-your-node-process-as-a-deamon-pm2">10 Run your node process as a deamon (PM2)</h2>
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04">Source - DigitalOcean</a></p>
+<p>PM2 allows running the node application as a background process and facilitates
+integration with nginx proxy. </p>
+<ol>
+<li>Install PM2</li>
+</ol>
+<pre><code class="language-bash">sudo npm install pm2@latest -g
+</code></pre>
+<ol start="2">
+<li>Run your node app through PM2</li>
+</ol>
+<pre><code class="language-bash">pm2 start &lt;your_script&gt;.js
+</code></pre>
+<ol start="3">
+<li>Set PM2 to run every system startup:</li>
+</ol>
+<pre><code class="language-bash">pm2 startup systemd
+</code></pre>
+<p>This will output a command such as </p>
+<pre><code class="language-bash">sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u &lt;user&gt; --hp /home/&lt;user&gt;
+</code></pre>
+<p>Execute it. </p>
+<ol start="4">
+<li>Save the PM2 process list and corresponding environments in an instance:</li>
+</ol>
+<pre><code class="language-bash">pm2 save
+</code></pre>
+<ol start="5">
+<li>Set PM2 to run your instance every startup: 
+reboot the system for pm2 to properly apply its changes:</li>
+</ol>
+<pre><code class="language-bash">sudo reboot
+</code></pre>
+<p>then </p>
+<pre><code class="language-bash">sudo systemctl start pm2-&lt;user&gt;
+</code></pre>
+<h2 id="11---set-up-nginx-as-a-reverse-proxy-server">11 - Set Up Nginx as a Reverse Proxy Server</h2>
+<ol>
+<li>Open up your server block configuration file for edition:</li>
+</ol>
+<pre><code class="language-bash">sudo vim /etc/nginx/sites-available/yourdomain.com
+</code></pre>
+<ol start="2">
+<li>Replace your <code>/location</code> block for:</li>
+</ol>
+<pre><code class="language-bash">server {
+...
+    location / {
+        proxy_pass http://localhost:&lt;port your Node app is exposing&gt;;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection &#39;upgrade&#39;;
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+...
+}
+</code></pre>
+<ol start="3">
+<li>Check for syntax errors on your serverblock conf file:</li>
+</ol>
+<pre><code>sudo nginx -t
+</code></pre>
+<ol start="4">
+<li>Restart Nginx</li>
+</ol>
+<pre><code>sudo systemctl restart nginx
+</code></pre>
+<p><strong>Your website is now fully running at your domain.com!!</strong></p>
