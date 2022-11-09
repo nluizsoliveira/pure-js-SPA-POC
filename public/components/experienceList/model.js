@@ -2,11 +2,11 @@ export const EXPERIENCES = [
     {
         title: "Backend Intern - Amdocs (Nov 2021 - Current)",
         companyInfo: "World leading Software provider for Telecoms",
-        firstParagraph: "Worked with data migration and backend of Claro, a telecom company with over 90.000.000 clients", 
-        firstImage: "/components/experienceList/images/experience_1_1.png",
-        secondImage: "/components/experienceList/images/experience_1_2.gif",
-        secondParagraph: "Implemented Bash, Pro*C and SQL scripts for OI-CLARO clients database migration.",
-        thirdParagraph: "Manteined and tested Java Web applications (Oracle Weblogic stack: EJBs, JSPs; Junit)"
+        firstParagraph: "Worked with database migration and backend of a telecom company with over 90.000.000 clients", 
+        firstImage: "/components/experienceList/images/experience_1_2.gif",
+        secondImage: "/components/experienceList/images/experience_1_1.png",
+        secondParagraph: "Mantainance of Java Web applications (Oracle Weblogic stack: EJBs, JSPs; Junit)",
+        thirdParagraph: "Implemented Bash, Pro*C and SQL scripts for clients database migration."
     },
     {    
         title: "Data Mining Intern - Sigalei (Apr 2020 - Mar 2021)",

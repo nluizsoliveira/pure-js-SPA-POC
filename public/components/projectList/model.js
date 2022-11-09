@@ -1,12 +1,12 @@
 export const PROJECTS = [
     {    
-        title: "Certificate Generator",
-        firstParagraph: "Node.js batch script that parses a .csv file and generates .pdf certificates for each line/person",
-        firstImage: "/components/projectList/images/project_1_1.png",
-        secondImage: "/components/projectList/images/project_1_2.png",
-        sourceCode: "https://github.com/USPCodeLabSanca/Node-Batch-Certificate-Generator",
-        secondParagraph: "Mentor of the project, responsible for idealizing, writing requirements, spliting requirements in features divided across team and coding",
-        thirdParagraph: "In use for generating USPCodelab certificates."
+        title: "This personal/blog website",
+        firstParagraph: "I pursued learning how complex tasks are handled underneath by using as little frameworks as possible. As a tradeoff, there's much to improve in performance and security.",
+        firstImage: "/components/projectList/images/project_5_2.png",
+        secondImage: "/components/projectList/images/project_5_1.png",
+        sourceCode: "https://github.com/nluizsoliveira/personal-website",
+        secondParagraph: "The frontend runs a SPA in pure HTML/CSS/Js through Stateful MVC Components. Routes are handled through history api. Backend runs in Node.",
+        thirdParagraph: "The deploy was manually configured in a VPS using Nginx as a reverse proxy, which is fully documented <a class = 'highlight' href = 'https://nelsonserpa.com/blog/infra_devops/1'>in the blog</a>"
     },
     {    
         title: "Frontend-API-Mysql POC",
@@ -27,3 +27,15 @@ export const PROJECTS = [
         thirdParagraph: "Defined the sylbbus and wrote some of the Javascript chapters"
     }
 ]
+
+/*
+{    
+        title: "Certificate Generator",
+        firstParagraph: "Node.js batch script that parses a .csv file and generates .pdf certificates for each line/person",
+        firstImage: "/components/projectList/images/project_1_1.png",
+        secondImage: "/components/projectList/images/project_1_2.png",
+        sourceCode: "https://github.com/USPCodeLabSanca/Node-Batch-Certificate-Generator",
+        secondParagraph: "Mentor of the project, responsible for idealizing, writing requirements, spliting requirements in features divided across team and coding",
+        thirdParagraph: "In use for generating USPCodelab certificates."
+    },
+*/
