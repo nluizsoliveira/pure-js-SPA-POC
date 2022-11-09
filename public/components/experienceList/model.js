@@ -3,8 +3,8 @@ export const EXPERIENCES = [
         title: "Backend Intern - Amdocs (Nov 2021 - Current)",
         companyInfo: "World leading Software provider for Telecoms",
         firstParagraph: "Worked with database migration and backend of a telecom company with over 90.000.000 clients", 
-        firstImage: "/components/experienceList/images/experience_1_2.png",
-        secondImage: "/components/experienceList/images/experience_1_1.gif",
+        firstImage: "/components/experienceList/images/experience_1_2.gif",
+        secondImage: "/components/experienceList/images/experience_1_1.png",
         secondParagraph: "Mantainance of Java Web applications (Oracle Weblogic stack: EJBs, JSPs; Junit)",
         thirdParagraph: "Implemented Bash, Pro*C and SQL scripts for clients database migration."
     },
