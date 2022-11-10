@@ -12,9 +12,8 @@ body{
 #indexContentRoot{
     margin-top: 80px;
     background-color: var(--grey);
-    width: 310px;
+    width: 360px;
     min-height: 400px;
-    padding: 10px 20px;
     display: flex;
     flex-direction: column;
     border-radius: 5px 5px 5px 5px;

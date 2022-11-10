@@ -65,7 +65,7 @@ DNS propagation can take up to 24h, which is the reason we're setting DNS first.
 ### 1.0 Discover your VPS IPV4 and IPV6
 If you're using hostinger it's [here](https://hpanel.hostinger.com/servers/)
 ### 1.1 Delete older DNS Records
-At **hpanel.hostinger.com/domain/your_domain.com/dns**, delete: 
+At hpanel.hostinger.com/domain/your_domain.com/dns, delete: 
 
 1. All records type `A` with names exactly `@` or `www`.  
 2. All records type `AAAA` with names exactly `@` or `www`.

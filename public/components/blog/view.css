@@ -1,5 +1,7 @@
 #blogRoot{
     font-size: 12px;
+    display: flex;
+    justify-content:flex-start
 }
 
 h1{
@@ -41,11 +43,14 @@ pre{
     margin-top: 5px;
     padding: 5px;
     overflow-x:auto;
+    max-width: 250px;
+
 }
 
 code{
     font-weight: bold;
     font-style: italic;
+    max-width: 200px;
 }
 
 ol {
@@ -71,6 +76,38 @@ a{
     text-decoration: underline;
 }
 
+#blogPost{
+    width: 280px;
+    padding: 5px;
+}
+
+#blogNav{
+    background-color: var(--orange);
+    display: flex;
+    padding: 5px;
+    border-radius: 5px 0px;
+    padding-top: 10px;
+}
+
+.blogSection{
+    display: flex;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.241);
+
+}
+
+.blogEntry{
+    display: flex;
+    justify-content: flex-start;
+    text-decoration: none;
+    margin-bottom: 5px;
+    color: var(--grey);
+    font-size: 10px;
+}
+
+.activeBlogEntry{
+    font-weight: bold;
+}
 @media only screen and (min-width: 800px) {
     #blogRoot{
         font-size: 14px;
