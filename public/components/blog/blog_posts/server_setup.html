@@ -210,23 +210,17 @@ We will use git for transfering files. If that&#39;s not your case, enable sftp.
 <strong>(be sure to allow ssh otherwise you will get locked)</strong> enable the firewall:</p>
 <pre><code class="language-bash">sudo ufw enable
 </code></pre>
-<h3 id="additional-useful-ufw-commands">(Additional useful UFW Commands)</h3>
-<ol>
-<li>Drop a rule
-Notice the numerical column on the table. You can drop a rule by:</li>
-</ol>
+<h3 id="additional-useful-ufw-commands">Additional useful UFW Commands</h3>
+<p><strong>(Additional): Drop a rule</strong></p>
+<p>Notice the numerical column on the table. You can drop a rule by: </p>
 <pre><code class="language-bash"># Not a step 
 sudo ufw delete &lt;ruleNumber&gt;
 </code></pre>
-<ol start="2">
-<li>Reset UFW to default settings:</li>
-</ol>
+<p><strong>(Additional): Reset Firewall</strong></p>
 <pre><code class="language-bash"># Not a step 
 sudo ufw reset
 </code></pre>
-<ol start="3">
-<li>Disable UFW</li>
-</ol>
+<p><strong>(Additional): Disable UFW</strong></p>
 <pre><code class="language-bash"># Not a step 
 sudo ufw disable
 </code></pre>
@@ -303,34 +297,24 @@ folder for serving content. Nginx is the one serving apache2 standard HTML.</p>
 <h3 id="75-set-up-a-server-block">7.5 Set up a Server Block</h3>
 <p>Server Blocks are used to encapsulate a domain. The default server block is 
 configured to serve files ate <code>/var/www/html</code>. </p>
-<ol>
-<li>Create a server block for your domain:</li>
-</ol>
+<p><strong>1- Create a server block for your domain:</strong></p>
 <pre><code class="language-bash">sudo mkdir -p /var/www/yourdomain.com/html
 </code></pre>
-<ol start="2">
-<li>Assign ownership of the directory with the $USER environment variable</li>
-</ol>
+<p><strong>2- Assign ownership of the directory with the $USER environment variable</strong></p>
 <pre><code class="language-bash">sudo chown -R $USER:$USER /var/www/yourdomain.com/html
 </code></pre>
-<ol start="3">
-<li>Allow the owner to read, write, and execute the files while granting only 
-read and execute permissions to groups and others</li>
-</ol>
+<p><strong>3- Allow the owner to read, write, and execute the files while granting only</strong></p>
+<p>read and execute permissions to groups and others</p>
 <pre><code class="language-bash">sudo chmod -R 755 /var/www/yourdomain.com
 </code></pre>
-<ol start="4">
-<li>Create a sample index.html page and fill it with a testing content</li>
-</ol>
+<p><strong>4- Create a sample index.html page and fill it with a testing content</strong></p>
 <pre><code class="language-bash">vim /var/www/yourdomain.com/html/index.html
 </code></pre>
 <pre><code>&lt;html&gt;
      Your server block is being served 
 &lt;/html&gt;
 </code></pre>
-<ol start="5">
-<li>Create a configuration file for your server block</li>
-</ol>
+<p><strong>5- Create a configuration file for your server block</strong></p>
 <pre><code class="language-bash">sudo vim /etc/nginx/sites-available/yourdomain.com
 </code></pre>
 <p>and paste inside it the configuration: </p>
@@ -353,29 +337,20 @@ read and execute permissions to groups and others</li>
         }
 }
 </code></pre>
-<ol start="6">
-<li>Enable the file by creating a link from it to the sites-enabled directory, which Nginx reads from during startup:</li>
-</ol>
+<p><strong>6- Enable the file by creating a link from it to the sites-enabled directory, which Nginx reads from during startup:</strong></p>
 <pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/yourdomain.com /etc/nginx/sites-enabled/
 </code></pre>
-<ol start="7">
-<li>Uncomment and adjust<code>server_names_hash_bucket_size</code> at <code>/etc/nginx/nginx.conf</code> to 64 (this avoid a possible hash bucket memory problem that can arise from adding additional server names)</li>
-</ol>
+<p><strong>7- Uncomment and adjust<code>server_names_hash_bucket_size</code> at <code>/etc/nginx/nginx.conf</code> to 64 (this avoid a possible hash bucket memory problem that can arise from adding additional server names):</strong></p>
 <pre><code class="language-bash">sudo vim /etc/nginx/nginx.conf
 </code></pre>
-<p>Also change <code>include /etc/nginx/sites-enabled/*;</code> to <code>include /etc/nginx/sites-enabled/yourdomain.com;</code>
-8. Run nginx test:</p>
+<p>Also change <code>include /etc/nginx/sites-enabled/*;</code> to <code>include /etc/nginx/sites-enabled/yourdomain.com;</code></p>
+<p><strong>8- Run nginx test:</strong></p>
 <pre><code class="language-bash">sudo nginx -t
 </code></pre>
-<ol start="9">
-<li>Restart nginx to apply changes:</li>
-</ol>
+<p><strong>9-Restart nginx to apply changes:</strong></p>
 <pre><code>sudo systemctl restart nginx
 </code></pre>
-<ol start="10">
-<li>Finally, type your VPS <code>ipv4</code> on browser and check if changes applied. 
-Use <code>ctrl f5</code> to reload clearing cache.</li>
-</ol>
+<p><strong>10-Finally, type your VPS <code>ipv4</code> on browser and check if changes applied. Use <code>ctrl f5</code> to reload clearing cache.</strong></p>
 <h2 id="8---enable-https-on-nginx-install-tlsssl-certificates-certbot">8 - Enable HTTPS on Nginx: Install TLS/SSL certificates (Certbot)</h2>
 <p><a href="https://certbot.eff.org/instructions?ws=nginx&amp;os=pip">full reference  - certbot</a></p>
 <h3 id="80-remove-old-certbot-installed">8.0 Remove old Certbot installed</h3>
@@ -421,33 +396,23 @@ git config --global user.username&quot;&lt;your username&gt;&quot;
 ssh-keygen -t ed25519 -C &quot;your_git_email@example.com&quot;
 </code></pre>
 <p>Call it <code>gitkey</code>. </p>
-<ol>
-<li>Start to your <code>ssh-agent</code>:</li>
-</ol>
+<p><strong>1- Start to your <code>ssh-agent</code>:</strong></p>
 <pre><code class="language-bash">eval &quot;$(ssh-agent -s)&quot;
 </code></pre>
-<ol start="2">
-<li>Add the private key to your agent:</li>
-</ol>
+<p><strong>2- Add the private key to your agent:</strong></p>
 <pre><code class="language-bash">ssh-add gitkey
 </code></pre>
-<ol start="3">
-<li>If you&#39;re facing issues with ssh not working on reboot, add the two commands 
-above to your <code>~./bashrc</code> file.</li>
-</ol>
+<p><strong>3- If you&#39;re facing issues with ssh not working on reboot, add the two commands 
+above to your <code>~./bashrc</code> file.</strong></p>
 <pre><code class="language-bash">vim ~/.bashrc
 # Paste both commands above at the bottom of your ~/.bashrc
 eval &quot;$(ssh-agent -s)&quot;
 ssh-add ~/.ssh/gitkey
 </code></pre>
-<p>vim 
-4. Copy the public key content: </p>
+<p><strong>4- Copy the public key content:</strong></p>
 <pre><code class="language-bash">cat gitkey.pub
 </code></pre>
-<ol start="5">
-<li>Paste it at <a href="https://github.com/settings/ssh/new">Github SSH key manager</a>
-as an <code>Authentication Key</code></li>
-</ol>
+<p><strong>5- Paste it at <a href="https://github.com/settings/ssh/new">Github SSH key manager</a> as an <code>Authentication Key</code></strong></p>
 <h3 id="92-clone-your-repo-using-ssh">9.2 Clone your repo using ssh</h3>
 <pre><code class="language-bash">cd ~
 git clone git@github.com:&lt;user&gt;/&lt;repo-path&gt;.git
@@ -460,48 +425,34 @@ npm install
 <p><a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04">Source - DigitalOcean</a></p>
 <p>PM2 allows running the node application as a background process and facilitates
 integration with nginx proxy. </p>
-<ol>
-<li>Install PM2</li>
-</ol>
+<p><strong>1- Install PM2</strong></p>
 <pre><code class="language-bash">sudo npm install pm2@latest -g
 </code></pre>
-<ol start="2">
-<li>Run your node app through PM2</li>
-</ol>
+<p><strong>2- Run your node app through PM2</strong></p>
 <pre><code class="language-bash">pm2 start &lt;your_script&gt;.js
 </code></pre>
-<ol start="3">
-<li>Set PM2 to run every system startup:</li>
-</ol>
+<p><strong>3- Set PM2 to run every system startup:</strong></p>
 <pre><code class="language-bash">pm2 startup systemd
 </code></pre>
 <p>This will output a command such as </p>
 <pre><code class="language-bash">sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u &lt;user&gt; --hp /home/&lt;user&gt;
 </code></pre>
 <p>Execute it. </p>
-<ol start="4">
-<li>Save the PM2 process list and corresponding environments in an instance:</li>
-</ol>
+<p><strong>4- Save the PM2 process list and corresponding environments in an instance:</strong> </p>
 <pre><code class="language-bash">pm2 save
 </code></pre>
-<ol start="5">
-<li>Set PM2 to run your instance every startup: 
-reboot the system for pm2 to properly apply its changes:</li>
-</ol>
+<p><strong>5- Set PM2 to run your instance every startup:</strong>
+reboot the system for pm2 to properly apply its changes:</p>
 <pre><code class="language-bash">sudo reboot
 </code></pre>
 <p>then </p>
 <pre><code class="language-bash">sudo systemctl start pm2-&lt;user&gt;
 </code></pre>
 <h2 id="11---set-up-nginx-as-a-reverse-proxy-server">11 - Set Up Nginx as a Reverse Proxy Server</h2>
-<ol>
-<li>Open up your server block configuration file for edition:</li>
-</ol>
+<p><strong>1- Open up your server block configuration file for edition:</strong> </p>
 <pre><code class="language-bash">sudo vim /etc/nginx/sites-available/yourdomain.com
 </code></pre>
-<ol start="2">
-<li>Replace your <code>/location</code> block for:</li>
-</ol>
+<p><strong>2- Replace your <code>/location</code> block for:</strong> </p>
 <pre><code class="language-bash">server {
 ...
     location / {
@@ -515,14 +466,10 @@ reboot the system for pm2 to properly apply its changes:</li>
 ...
 }
 </code></pre>
-<ol start="3">
-<li>Check for syntax errors on your serverblock conf file:</li>
-</ol>
+<p><strong>3- Check for syntax errors on your serverblock conf file:</strong></p>
 <pre><code>sudo nginx -t
 </code></pre>
-<ol start="4">
-<li>Restart Nginx</li>
-</ol>
+<p><strong>4- Restart Nginx</strong></p>
 <pre><code>sudo systemctl restart nginx
 </code></pre>
 <p><strong>Your website is now fully running at your domain.com!!</strong></p>
