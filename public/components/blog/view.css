@@ -1,7 +1,8 @@
 #blogRoot{
     font-size: 12px;
     display: flex;
-    justify-content:flex-start
+    justify-content:flex-start;
+    margin-left: -25px;
 }
 
 h1{
@@ -77,52 +78,54 @@ a{
 #blogPost{
     width: 280px;
     padding: 5px;
+    border-radius: 5px;
+    background-color: var(--grey);
 }
 
 #blogNav{
-    background-color: var(--orange);
+    background-color: var(--black);
     display: flex;
-    padding: 5px;
+    padding-right: 5px;
     border-radius: 5px 0px;
+    padding-top: 2px;
+}
+
+.blogSectionWrapper{
+    border-top: 1px solid var(--orange);
+    margin-bottom: 10px;
+    margin-right: 5px;
+    padding: 3px;
+}
+
+.blogSection {
+    display: flex;
+    color: var(--orange);
+    font-weight: bolder;
+    padding-bottom: 5px;
     padding-top: 10px;
 }
 
-.blogSection{
-    display: flex;
-    font-weight: bold;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.241);
-}
-
-.blogEntry{
+.blogEntry {
     display: flex;
     justify-content: flex-start;
     text-decoration: none;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
     color: var(--grey);
     font-size: 10px;
+    padding: 3px;
+}
+
+.blogEntry:hover{
+    cursor: pointer;
+    border-left: 1px solid var(--orange);
+    color: var(--grey);
 }
 
 .activeBlogEntry{
     font-weight: bold;
+    border-left: 1px solid var(--orange);
 }
 
-@media only screen and (min-width: 500px) {
-    .blogSection{
-        font-size: 14px;
-    }
-    .blogEntry{
-        font-size: 12px;
-    }
-
-    #blogPost{
-        width: 400px;
-    }
-
-    pre{
-        max-width: 300px;
-    }
-    
-}
 @media only screen and (min-width: 800px) {
     #blogRoot{
         font-size: 14px;
@@ -182,10 +185,14 @@ a{
     }
 
     .blogSection{
-        font-size: 18px;
+        font-size: 24px;
     }
 
     .blogEntry{
         font-size: 16px;
     }
+}
+
+#indexContentRoot{
+    background-color: transparent;
 }
