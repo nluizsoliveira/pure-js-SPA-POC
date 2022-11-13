@@ -14,10 +14,10 @@ body{
     background-color: var(--grey);
     width: 310px;
     min-height: 400px;
-    padding: 10px 20px;
     display: flex;
     flex-direction: column;
     border-radius: 5px 5px 5px 5px;
+    padding: 10px 20px;
 }
 
 #navRoot{
@@ -27,6 +27,7 @@ body{
     top: 0;    
     width: 100%;
 }
+
 
 @media only screen and (min-width: 800px) {
     #navRoot {
@@ -41,6 +42,7 @@ body{
         align-items: flex-start;
         justify-content: flex-start;
         margin-top: 30px;
+        
     }
 
     #indexContentRoot{

@@ -65,7 +65,7 @@ DNS propagation can take up to 24h, which is the reason we're setting DNS first.
 ### 1.0 Discover your VPS IPV4 and IPV6
 If you're using hostinger it's [here](https://hpanel.hostinger.com/servers/)
 ### 1.1 Delete older DNS Records
-At **hpanel.hostinger.com/domain/your_domain.com/dns**, delete: 
+At hpanel.hostinger.com/domain/your_domain.com/dns, delete: 
 
 1. All records type `A` with names exactly `@` or `www`.  
 2. All records type `AAAA` with names exactly `@` or `www`.
@@ -77,8 +77,8 @@ Don't delete any other records.
 
 1. Create a record type `A` name `@` pointing to your VPS IPV4
 2. Create a record type `A` name `www` pointing to your VPS IPV4
-1. Create a record type `AAAA` name `@` pointing to your VPS IPV6
-2. Create a record type `AAAA` name `www` pointing to your VPS IPV6
+3. Create a record type `AAAA` name `@` pointing to your VPS IPV6
+4. Create a record type `AAAA` name `www` pointing to your VPS IPV6
 
 ### 1.3 Verify DNS propagation 
 
@@ -297,21 +297,22 @@ After setting all your desired rules
 ```bash
 sudo ufw enable
 ```
-### (Additional useful UFW Commands) 
+### Additional useful UFW Commands 
 
-1. Drop a rule
+**(Additional): Drop a rule**
+
 Notice the numerical column on the table. You can drop a rule by: 
 
 ```bash
 # Not a step 
 sudo ufw delete <ruleNumber>
 ```
-2. Reset UFW to default settings:
+**(Additional): Reset Firewall**
 ```bash
 # Not a step 
 sudo ufw reset
 ```
-3. Disable UFW
+**(Additional): Disable UFW**
 ```bash
 # Not a step 
 sudo ufw disable
@@ -411,19 +412,20 @@ folder for serving content. Nginx is the one serving apache2 standard HTML.
 Server Blocks are used to encapsulate a domain. The default server block is 
 configured to serve files ate `/var/www/html`. 
 
-1. Create a server block for your domain: 
+**1- Create a server block for your domain:**
 
 ```bash
 sudo mkdir -p /var/www/yourdomain.com/html
 ```
 
-2. Assign ownership of the directory with the $USER environment variable
+**2- Assign ownership of the directory with the $USER environment variable**
 
 ```bash
 sudo chown -R $USER:$USER /var/www/yourdomain.com/html
 ```
 
-3. Allow the owner to read, write, and execute the files while granting only 
+**3- Allow the owner to read, write, and execute the files while granting only**
+
 read and execute permissions to groups and others
 
 
@@ -431,7 +433,7 @@ read and execute permissions to groups and others
 sudo chmod -R 755 /var/www/yourdomain.com
 ```
 
-4. Create a sample index.html page and fill it with a testing content
+**4- Create a sample index.html page and fill it with a testing content**
 
 ```bash
 vim /var/www/yourdomain.com/html/index.html
@@ -442,7 +444,7 @@ vim /var/www/yourdomain.com/html/index.html
      Your server block is being served 
 </html>
 ```
-5. Create a configuration file for your server block
+**5- Create a configuration file for your server block**
 
 ```bash
 sudo vim /etc/nginx/sites-available/yourdomain.com
@@ -471,31 +473,32 @@ server {
 }
 ```
 
-6. Enable the file by creating a link from it to the sites-enabled directory, which Nginx reads from during startup:
+**6- Enable the file by creating a link from it to the sites-enabled directory, which Nginx reads from during startup:**
 
 ```bash
 sudo ln -s /etc/nginx/sites-available/yourdomain.com /etc/nginx/sites-enabled/
 ```
 
-7. Uncomment and adjust`server_names_hash_bucket_size` at `/etc/nginx/nginx.conf` to 64 (this avoid a possible hash bucket memory problem that can arise from adding additional server names) 
+**7- Uncomment and adjust`server_names_hash_bucket_size` at `/etc/nginx/nginx.conf` to 64 (this avoid a possible hash bucket memory problem that can arise from adding additional server names):**
 
 ```bash
 sudo vim /etc/nginx/nginx.conf
 ```
 Also change `include /etc/nginx/sites-enabled/*;` to `include /etc/nginx/sites-enabled/yourdomain.com;`
-8. Run nginx test:
+
+
+**8- Run nginx test:**
 
 ```bash
 sudo nginx -t
 ```
 
-9. Restart nginx to apply changes: 
+**9-Restart nginx to apply changes:**
 ```
 sudo systemctl restart nginx
 ```
 
-10. Finally, type your VPS `ipv4` on browser and check if changes applied. 
-Use `ctrl f5` to reload clearing cache. 
+**10-Finally, type your VPS `ipv4` on browser and check if changes applied. Use `ctrl f5` to reload clearing cache.**
 
 ## 8 - Enable HTTPS on Nginx: Install TLS/SSL certificates (Certbot)
 [full reference  - certbot](https://certbot.eff.org/instructions?ws=nginx&os=pip)
@@ -564,20 +567,20 @@ ssh-keygen -t ed25519 -C "your_git_email@example.com"
 
 Call it `gitkey`. 
 
-1. Start to your `ssh-agent`:
+**1- Start to your `ssh-agent`:**
 
 ```bash
 eval "$(ssh-agent -s)"
 ```
 
-2. Add the private key to your agent: 
+**2- Add the private key to your agent:**
 
 ```bash
 ssh-add gitkey
 ```
 
-3. If you're facing issues with ssh not working on reboot, add the two commands 
-above to your `~./bashrc` file. 
+**3- If you're facing issues with ssh not working on reboot, add the two commands 
+above to your `~./bashrc` file.**
 
 ```bash
 vim ~/.bashrc
@@ -585,15 +588,14 @@ vim ~/.bashrc
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/gitkey
 ```
-vim 
-4. Copy the public key content: 
+
+**4- Copy the public key content:**
 
 ```bash
 cat gitkey.pub
 ```
 
-5. Paste it at [Github SSH key manager](https://github.com/settings/ssh/new)
-as an `Authentication Key`
+**5- Paste it at [Github SSH key manager](https://github.com/settings/ssh/new) as an `Authentication Key`**
 
 ### 9.2 Clone your repo using ssh
 
@@ -615,18 +617,18 @@ npm install
 PM2 allows running the node application as a background process and facilitates
 integration with nginx proxy. 
 
-1. Install PM2
+**1- Install PM2**
 
 ```bash
 sudo npm install pm2@latest -g
 ```
 
-2. Run your node app through PM2
+**2- Run your node app through PM2**
 ```bash
 pm2 start <your_script>.js
 ```
 
-3. Set PM2 to run every system startup:
+**3- Set PM2 to run every system startup:**
 ```bash
 pm2 startup systemd
 ```
@@ -639,13 +641,13 @@ sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -
 
 Execute it. 
 
-4. Save the PM2 process list and corresponding environments in an instance: 
+**4- Save the PM2 process list and corresponding environments in an instance:** 
 
 ```bash
 pm2 save
 ```
 
-5. Set PM2 to run your instance every startup: 
+**5- Set PM2 to run your instance every startup:**
 reboot the system for pm2 to properly apply its changes:
 
 ```bash
@@ -659,13 +661,13 @@ sudo systemctl start pm2-<user>
 
 ## 11 - Set Up Nginx as a Reverse Proxy Server
 
-1. Open up your server block configuration file for edition: 
+**1- Open up your server block configuration file for edition:** 
 
 ```bash
 sudo vim /etc/nginx/sites-available/yourdomain.com
 ```
 
-2. Replace your `/location` block for: 
+**2- Replace your `/location` block for:** 
 
 ```bash
 server {
@@ -682,12 +684,12 @@ server {
 }
 ```
 
-3. Check for syntax errors on your serverblock conf file:
+**3- Check for syntax errors on your serverblock conf file:**
 ```
 sudo nginx -t
 ```
 
-4. Restart Nginx
+**4- Restart Nginx**
 ```
 sudo systemctl restart nginx
 ```
