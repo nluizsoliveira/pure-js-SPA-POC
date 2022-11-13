@@ -44,7 +44,7 @@ pre{
     margin-top: 5px;
     padding: 5px;
     overflow-x:auto;
-    max-width: 250px;
+    max-width: 65vw;
 }
 
 code{
@@ -76,7 +76,7 @@ a{
 }
 
 #blogPost{
-    width: 280px;
+    width: 75vw;
     padding: 5px;
     border-radius: 5px;
     background-color: var(--grey);
@@ -88,6 +88,7 @@ a{
     padding-right: 5px;
     border-radius: 5px 0px;
     padding-top: 2px;
+    width: 25vw;
 }
 
 .blogSectionWrapper{

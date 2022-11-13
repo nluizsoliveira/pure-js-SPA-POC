@@ -12,7 +12,7 @@ body{
 #indexContentRoot{
     margin-top: 80px;
     background-color: var(--grey);
-    width: 310px;
+    width: 85vw;
     min-height: 400px;
     display: flex;
     flex-direction: column;
