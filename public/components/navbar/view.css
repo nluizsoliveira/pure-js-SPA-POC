@@ -3,7 +3,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 100vw;
     background-color: var(--black);
     font-weight: 700;
     font-size: 11px;
@@ -11,7 +11,7 @@
 
 .navItem{
     background-color: var(--grey);
-    width: 90px;
+    width: 18vw;
     height: 50px;
     margin: 15px 4px;
     display: flex;
