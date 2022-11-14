@@ -8,7 +8,7 @@ blogRenderer.renderBlog()
 const app = express();
 app.listen(8080);
 
-const publicFolder = path.join(__dirname, 'publicFolder');
+const publicFolder = path.join(__dirname, 'public');
 app.use('/', express.static(publicFolder));
 app.get('/', function(req, res) {
     res.sendFile(path.join(publicFolder, 'index.html'));

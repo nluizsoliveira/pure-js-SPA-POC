@@ -31,7 +31,7 @@ const BLOGNAV_MODEL = [
             },
             {
                 'title': 'Deploy a Node webserver on your own domain/VPS using Nginx Reverse Proxy, PM2 and Certbot',
-                'filePath': '/components/blog/blog_posts/server_setup.html',
+                'filePath': '/components/blog/sections/infra_devops/server_setup.html',
             },
         ]
     },
