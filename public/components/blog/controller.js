@@ -11,7 +11,7 @@ const renderView = async function(root){
 
 const renderPost = async function(){
     const postRoot = document.getElementById("blogPost")
-    const post = await fetch('/components/blog/blog_posts/server_setup.html')
+    const post = await fetch('/components/blog/sections/infra_devops/server_setup.html')
         .then(res =>{ return res.text() })
     postRoot.innerHTML = post
 }
