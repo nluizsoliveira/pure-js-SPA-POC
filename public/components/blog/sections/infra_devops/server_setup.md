@@ -326,7 +326,7 @@ I'll use Node 16
 
 ```bash
 cd /tmp
-suo apt install curl -y
+sudo apt install curl -y
 curl -sLO https://deb.nodesource.com/setup_16.x
 sudo bash setup_16.x
 sudo apt install -y nodejs gcc g++ make

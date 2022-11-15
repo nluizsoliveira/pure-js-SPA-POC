@@ -1,0 +1,32 @@
+.blogEntry {
+    display: flex;
+    justify-content: flex-start;
+    text-decoration: none;
+    margin-bottom: 3px;
+    color: var(--grey);
+    font-size: 10px;
+    padding: 3px;
+}
+
+.blogEntry:hover{
+    cursor: pointer;
+    border-left: 1px solid var(--orange);
+    color: var(--grey);
+}
+
+.activeBlogEntry{
+    font-weight: bold;
+    border-left: 1px solid var(--orange);
+}
+
+@media only screen and (min-width: 800px) {
+    .blogEntry{
+        font-size: 14px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .blogEntry{
+        font-size: 16px;
+    }
+}

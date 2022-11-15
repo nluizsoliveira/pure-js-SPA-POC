@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+var fs = require('fs');
 const {BlogRenderer} = require('./preRenderers.js');
 
 const blogRenderer = new BlogRenderer();
@@ -31,20 +32,14 @@ const isValidBlogPost = function(params){
     return ALL_SECTIONS.includes(section) && IDS.includes(postId)
 }
 
-/* DEVELOPMENT ONLY 
 app.use('/test', express.static(publicFolder));
 app.get('/test/:component', function(req, res) {
     const componentsFolder = path.join(publicFolder, 'components')
     const allComponents = fs.readdirSync(componentsFolder)
     const component = req.params.component
     
-    if (allComponents.includes(component)){
-        res.sendFile(path.join(componentsFolder, `/${component}/test/test.html`));
-    }
-    
-    else{
-        res.sendStatus(404);
-    }
+    allComponents.includes(component)
+        ? res.sendFile(path.join(componentsFolder, `/${component}/test/test.html`))
+        : res.sendStatus(404);
 });
-*/
 

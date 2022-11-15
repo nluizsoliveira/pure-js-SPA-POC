@@ -1,0 +1,38 @@
+#blogNav{
+    background-color: var(--black);
+    display: flex;
+    padding-right: 5px;
+    border-radius: 5px 0px;
+    padding-top: 2px;
+    width: 25vw;
+}
+
+.blogSectionWrapper{
+    border-top: 1px solid var(--orange);
+    margin-bottom: 10px;
+    margin-right: 5px;
+    padding: 3px;
+}
+
+.blogSection {
+    display: flex;
+    color: var(--orange);
+    font-weight: bolder;
+    padding-bottom: 5px;
+    padding-top: 10px;
+}
+
+
+
+@media only screen and (min-width: 800px) {
+    .blogSection{
+        font-size: 16px;
+    }
+
+}
+
+@media only screen and (min-width: 1200px) {
+    .blogSection{
+        font-size: 24px;
+    }
+}

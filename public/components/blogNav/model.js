@@ -1,4 +1,4 @@
-const BLOGNAV_MODEL = [
+export const BLOGNAV_MODEL = [
     {
         'sectionPath': 'data_mining',
         'sectionName': 'Data Mining',
