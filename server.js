@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-var fs = require('fs');
+const fs = require('fs');
 const {BlogRenderer} = require('./preRenderers.js');
 
 const blogRenderer = new BlogRenderer();
@@ -38,8 +38,12 @@ app.get('/test/:component', function(req, res) {
     const allComponents = fs.readdirSync(componentsFolder)
     const component = req.params.component
     
-    allComponents.includes(component)
-        ? res.sendFile(path.join(componentsFolder, `/${component}/test/test.html`))
-        : res.sendStatus(404);
+    if (allComponents.includes(component)){
+        res.sendFile(path.join(componentsFolder, `/${component}/test/test.html`));
+    }
+    
+    else{
+        res.sendStatus(404);
+    }
 });
 
