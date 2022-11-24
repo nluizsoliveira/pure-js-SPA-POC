@@ -1,4 +1,4 @@
-# personal-website
+# Pure JS SPA Poc
 
 Available at https://nelsonserpa.com
 
