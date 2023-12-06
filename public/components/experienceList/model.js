@@ -1,6 +1,6 @@
 export const EXPERIENCES = [
     {
-        title: "Backend Intern - Amdocs (Nov 2021 - Current)",
+        title: "Backend Intern - Amdocs (Nov 2021 - Nov 2022)",
         companyInfo: "World leading Software provider for Telecoms",
         firstParagraph: "Worked with database migration and backend of a telecom company with over 90.000.000 clients", 
         firstImage: "/components/experienceList/images/experience_1_2.gif",
